@@ -1,6 +1,12 @@
-package ru.job4j.calculator;
+package ru.job4j.calculate;
 
-public class Calculator {
+/**
+ * Calculate
+ *
+ * @author Vladimir Kovtun (vovan_men@mail.ru)
+ */
+
+public class Calculate {
 
     public static void add(double first, double second){
         double result = first + second;
@@ -21,6 +27,11 @@ public class Calculator {
         double result = first * second;
         System.out.println(first + " * " + second + " = " + result);
     }
+
+    /**
+     * Main.
+     * @param args - args.
+     */
 
     public static void main(String[] args) {
         add(1,1);

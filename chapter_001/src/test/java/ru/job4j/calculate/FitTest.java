@@ -1,4 +1,4 @@
-package ru.job4j.calculator;
+package ru.job4j.calculate;
 
 import org.junit.Assert;
 import org.junit.Test;
