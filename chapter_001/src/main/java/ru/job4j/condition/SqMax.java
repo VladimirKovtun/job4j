@@ -2,16 +2,15 @@ package ru.job4j.condition;
 
 public class SqMax {
 
-    public static int max(int first, int second, int third, int forth){
+    public static int max(int first, int second, int third, int forth) {
         int result = forth;
-        if (first > second){
-            result = first > third ? (first > forth ? first : result) : third;
-        }else if (second > third){
-                  if (second > forth){
-                      result = second;
-                  }
-        }else if (third > forth){
-                  result = third;
+        if (first > second) {
+            result = first > third ? first : third;
+            result = result > forth ? result : forth;
+        } else if (second > third) {
+            result = second > forth ? second : forth;
+        } else if (third > forth) {
+            result = third;
         }
         return result;
     }
