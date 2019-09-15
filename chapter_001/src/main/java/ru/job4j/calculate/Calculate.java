@@ -7,22 +7,45 @@ package ru.job4j.calculate;
  */
 
 public class Calculate {
-
+    /**
+     * Adding numbers.
+     *
+     * @param first - first number.
+     * @param second - second number.
+     */
     public static void add(double first, double second){
         double result = first + second;
         System.out.println(first + " + " + second + " = " + result);
     }
 
+    /**
+     * Subtract numbers.
+     *
+     * @param first - first number.
+     * @param second - second number.
+     */
     public static void subtrack(double first, double second){
         double result = first - second;
         System.out.println(first + " - " + second + " = " + result);
     }
 
+    /**
+     * Divide numbers.
+     *
+     * @param first - first number.
+     * @param second - second number.
+     */
     public static void div(double first, double second){
         double result = first / second;
         System.out.println(first + " / " + second + " = " + result);
     }
 
+    /**
+     * Multiply numbers.
+     *
+     * @param first - first number.
+     * @param second - second number.
+     */
     public static void multiply(double first, double second){
         double result = first * second;
         System.out.println(first + " * " + second + " = " + result);
