@@ -5,24 +5,27 @@ public class MatrixCheck {
     public static boolean isWin(char[][] board) {
         boolean result = true;
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                char sign = board[i][j];
-                if (i == 0 && sign == 'X') {
-                    for (int k = 1; k < board.length; k++) {
-                        if (board[i + k][j] != 'X') {
+            char sign = board[i][i];
+            if (sign == 'X') {
+                if (((i < 4) && board[i][i + 1] == 'X') || ((i > 1) && board[i][i - 1] == 'X')) {
+                    for (int k = 0; k < board.length; k++) {
+                        if (board[i][k] != 'X') {
                             result = false;
                             break;
                         }
+                        if (k == board.length - 1) result = true;
                     }
-                } else if (j == 0 && sign == 'X') {
-                    for (int k = 1; k < board[i].length; k++) {
-                        if (board[i][j + k] != 'X') {
+                } else if (((i < 4) && board[i + 1][i] == 'X') || ((i > 1) && board[i - 1][i] == 'X')) {
+                    for (int k = 0; k < board.length; k++) {
+                        if (board[k][i] != 'X') {
                             result = false;
                             break;
                         }
+                        if (k == board.length - 1) result = true;
                     }
                 }
-            }
+                if (result) break;
+            } else result = false;
         }
         return result;
     }
