@@ -7,7 +7,7 @@ import org.junit.Test;
 public class DefragmentTest {
 
     @Test
-    public void whenNotFirstNull(){
+    public void whenNotFirstNull() {
         String[] input = {"I", null, "wanna", null, "be", null, "compressed"};
         String[] result = Defragment.compress(input);
         String[] expected = {"I", "wanna", "be", "compressed", null, null, null};
@@ -15,7 +15,7 @@ public class DefragmentTest {
     }
 
     @Test
-    public void whenFirstNull(){
+    public void whenFirstNull() {
         String[] input = {null, "I", "wanna", null, "be", null, "compressed"};
         String[] result = Defragment.compress(input);
         String[] expected = {"I", "wanna", "be", "compressed", null, null, null};

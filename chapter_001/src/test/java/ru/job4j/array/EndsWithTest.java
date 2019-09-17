@@ -7,17 +7,17 @@ import org.junit.Test;
 public class EndsWithTest {
 
     @Test
-    public void whenWordEndsWithPrefixThenTrue(){
-        char[] word = {'H','e','l','l','o'};
-        char[] pref = {'l','o'};
+    public void whenWordEndsWithPrefixThenTrue() {
+        char[] word = {'H', 'e', 'l', 'l', 'o'};
+        char[] pref = {'l', 'o'};
         boolean result = EndsWith.endsWith(word, pref);
         Assert.assertThat(result, Is.is(true));
     }
 
     @Test
-    public void whenWordNotEndsWithPrefixThenTrue(){
-        char[] word = {'H','e','l','l','o'};
-        char[] pref = {'l','a'};
+    public void whenWordNotEndsWithPrefixThenTrue() {
+        char[] word = {'H', 'e', 'l', 'l', 'o'};
+        char[] pref = {'l', 'a'};
         boolean result = EndsWith.endsWith(word, pref);
         Assert.assertThat(result, Is.is(false));
     }

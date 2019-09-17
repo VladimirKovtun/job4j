@@ -7,7 +7,7 @@ import org.junit.Test;
 public class TurnTest {
 
     @Test
-    public void whenTurnArrayWithEvenAmountOfElementsThenTurnedAway(){
+    public void whenTurnArrayWithEvenAmountOfElementsThenTurnedAway() {
         Turn turn = new Turn();
         int[] input = {4, 1, 6, 2};
         int[] expect = {2, 6, 1, 4};
@@ -16,7 +16,7 @@ public class TurnTest {
     }
 
     @Test
-    public void whenTurnArrayWithOddAmountOfElementsThenTurnedAway(){
+    public void whenTurnArrayWithOddAmountOfElementsThenTurnedAway() {
         Turn turn = new Turn();
         int[] input = {2, 5, 3, 6, 2};
         int[] expect = {2, 6, 3, 5, 2};

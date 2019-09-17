@@ -7,7 +7,7 @@ import org.junit.Test;
 public class ArrayCharTest {
 
     @Test
-    public void whenStartsWithPrefixThenTrue(){
+    public void whenStartsWithPrefixThenTrue() {
         char[] word = {'H', 'e', 'l', 'l', 'o'};
         char[] pref = {'H', 'e'};
         boolean rst = ArrayChar.startsW(word, pref);
@@ -15,7 +15,7 @@ public class ArrayCharTest {
     }
 
     @Test
-    public void whenNotStartsWithPrefixThenTrue(){
+    public void whenNotStartsWithPrefixThenTrue() {
         char[] word = {'H', 'e', 'l', 'l', 'o'};
         char[] pref = {'H', 'i'};
         boolean rst = ArrayChar.startsW(word, pref);

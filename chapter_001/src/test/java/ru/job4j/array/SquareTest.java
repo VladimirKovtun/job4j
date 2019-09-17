@@ -7,7 +7,7 @@ import org.junit.Test;
 public class SquareTest {
 
     @Test
-    public void whenBound3(){
+    public void whenBound3() {
         int bound = 3;
         Square square = new Square();
         int[] rst = square.calculate(bound);
@@ -16,7 +16,7 @@ public class SquareTest {
     }
 
     @Test
-    public void whenBound5(){
+    public void whenBound5() {
         int bound = 5;
         Square square = new Square();
         int[] rst = square.calculate(bound);
@@ -25,7 +25,7 @@ public class SquareTest {
     }
 
     @Test
-    public void whenBound1(){
+    public void whenBound1() {
         int bound = 1;
         Square square = new Square();
         int[] rst = square.calculate(bound);

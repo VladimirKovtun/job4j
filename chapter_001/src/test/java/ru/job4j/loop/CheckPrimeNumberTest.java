@@ -7,28 +7,28 @@ import org.junit.Test;
 public class CheckPrimeNumberTest {
 
     @Test
-    public void when5(){
+    public void when5() {
         CheckPrimeNumber checkPrimeNumber = new CheckPrimeNumber();
         boolean result = checkPrimeNumber.check(5);
         Assert.assertThat(result, Is.is(true));
     }
 
     @Test
-    public void when19(){
+    public void when19() {
         CheckPrimeNumber checkPrimeNumber = new CheckPrimeNumber();
         boolean result = checkPrimeNumber.check(19);
         Assert.assertThat(result, Is.is(true));
     }
 
     @Test
-    public void when4(){
+    public void when4() {
         CheckPrimeNumber checkPrimeNumber = new CheckPrimeNumber();
         boolean result = checkPrimeNumber.check(4);
         Assert.assertThat(result, Is.is(false));
     }
 
     @Test
-    public void when120(){
+    public void when120() {
         CheckPrimeNumber checkPrimeNumber = new CheckPrimeNumber();
         boolean result = checkPrimeNumber.check(120);
         Assert.assertThat(result, Is.is(false));

@@ -13,7 +13,9 @@ public class MatrixCheck {
                             result = false;
                             break;
                         }
-                        if (k == board.length - 1) result = true;
+                        if (k == board.length - 1) {
+                            result = true;
+                        }
                     }
                 } else if (((i < 4) && board[i + 1][i] == 'X') || ((i > 1) && board[i - 1][i] == 'X')) {
                     for (int k = 0; k < board.length; k++) {
@@ -21,11 +23,17 @@ public class MatrixCheck {
                             result = false;
                             break;
                         }
-                        if (k == board.length - 1) result = true;
+                        if (k == board.length - 1) {
+                            result = true;
+                        }
                     }
                 }
-                if (result) break;
-            } else result = false;
+                if (result) {
+                    break;
+                }
+            } else {
+                result = false;
+            }
         }
         return result;
     }

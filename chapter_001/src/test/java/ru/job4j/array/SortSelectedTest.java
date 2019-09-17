@@ -7,7 +7,7 @@ import org.junit.Test;
 public class SortSelectedTest {
 
     @Test
-    public void whenSort3(){
+    public void whenSort3() {
         int[] input = {4, 2, 3};
         int[] result = SortSelected.sort(input);
         int[] expect = {2, 3, 4};
@@ -15,7 +15,7 @@ public class SortSelectedTest {
     }
 
     @Test
-    public void whenSort5(){
+    public void whenSort5() {
         int[] input = {4, 7, 3, 1, 6};
         int[] result = SortSelected.sort(input);
         int[] expect = {1, 3, 4, 6, 7};

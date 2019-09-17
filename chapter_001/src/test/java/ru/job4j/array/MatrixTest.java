@@ -7,7 +7,7 @@ import org.junit.Test;
 public class MatrixTest {
 
     @Test
-    public void when2On2(){
+    public void when2On2() {
         Matrix matrix = new Matrix();
         int[][] table = matrix.multiple(2);
         int[][] expect = {

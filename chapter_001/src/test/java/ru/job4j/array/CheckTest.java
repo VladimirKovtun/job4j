@@ -7,7 +7,7 @@ import org.junit.Test;
 public class CheckTest {
 
     @Test
-    public void whenDataMonoTrueThenTrue(){
+    public void whenDataMonoTrueThenTrue() {
         Check check = new Check();
         boolean[] input = {true, true, true, true};
         boolean rst = check.mono(input);
@@ -15,7 +15,7 @@ public class CheckTest {
     }
 
     @Test
-    public void whenDataNotMonoTrueThenTrue(){
+    public void whenDataNotMonoTrueThenTrue() {
         Check check = new Check();
         boolean[] input = {false, false, true, true};
         boolean rst = check.mono(input);

@@ -7,7 +7,7 @@ import org.junit.Test;
 public class FindLoopTest {
 
     @Test
-    public void whenArrayHas5Then0(){
+    public void whenArrayHas5Then0() {
         FindLoop findLoop = new FindLoop();
         int[] input = {5, 10, 3};
         int value = 5;
@@ -16,7 +16,7 @@ public class FindLoopTest {
     }
 
     @Test
-    public void whenArrayHas25ThenMinus1(){
+    public void whenArrayHas25ThenMinus1() {
         FindLoop findLoop = new FindLoop();
         int[] input = {5, 10, 3};
         int value = 25;
@@ -25,7 +25,7 @@ public class FindLoopTest {
     }
 
     @Test
-    public void whenElementInSetRange(){
+    public void whenElementInSetRange() {
         int[] array = {2, 4, 6, 3, 6, 4};
         int start = 2;
         int finish = 5;
@@ -35,7 +35,7 @@ public class FindLoopTest {
     }
 
     @Test
-    public void whenElementNotSetRange(){
+    public void whenElementNotSetRange() {
         int[] array = {2, 4, 6, 3, 6, 4};
         int start = 2;
         int finish = 4;
