@@ -1,7 +1,10 @@
 package ru.job4j.array;
-
+/**
+ * MatrixCheck.
+ *
+ * @author Vladimir Kovtun (vovan_men@mail.ru)
+ */
 public class MatrixCheck {
-
     public static boolean isWin(char[][] board) {
         boolean result = false;
         for (int i = 0; i < board.length; i++) {

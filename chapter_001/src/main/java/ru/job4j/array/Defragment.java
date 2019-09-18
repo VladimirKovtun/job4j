@@ -1,7 +1,10 @@
 package ru.job4j.array;
-
+/**
+ * Defragment.
+ *
+ * @author Vladimir Kovtun (vovan_men@mail.ru)
+ */
 public class Defragment {
-
     public static String[] compress(String[] array) {
         for (int index = 0; index < array.length; index++) {
             String cell = array[index];
@@ -18,7 +21,6 @@ public class Defragment {
         }
         return array;
     }
-
     public static void main(String[] args) {
         String[] input = {"I", null, "wanna", null, "be", null, "compressed"};
         String[] compressed = compress(input);

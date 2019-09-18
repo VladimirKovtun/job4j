@@ -1,7 +1,10 @@
 package ru.job4j.condition;
-
+/**
+ * DummyBot.
+ *
+ * @author Vladimir Kovtun (vovan_men@mail.ru)
+ */
 public class DummyBot {
-
     public static String answer(String question) {
         String rs1 = "Это ставит меня в тупик. Задайте другой вопрос.";
         if ("Привет, Бот.".equals(question)) {

@@ -1,7 +1,10 @@
 package ru.job4j.array;
-
+/**
+ * Check.
+ *
+ * @author Vladimir Kovtun (vovan_men@mail.ru)
+ */
 public class Check {
-
     public boolean mono(boolean[] data) {
         boolean result = true;
         boolean el = data[0];

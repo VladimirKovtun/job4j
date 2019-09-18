@@ -1,7 +1,10 @@
 package ru.job4j.array;
-
+/**
+ * IsSorted.
+ *
+ * @author Vladimir Kovtun (vovan_men@mail.ru)
+ */
 public class IsSorted {
-
     public static boolean isSorted(int[] array) {
         boolean is = false;
         int count = 0;

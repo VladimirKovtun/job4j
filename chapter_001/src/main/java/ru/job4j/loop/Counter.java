@@ -1,7 +1,11 @@
 package ru.job4j.loop;
 
+/**
+ * Counter.
+ *
+ * @author Vladimir Kovtun (vovan_men@mail.ru)
+ */
 public class Counter {
-
     public int add(int start, int finish) {
         int sum = 0;
         for (int i = start; i <= finish; i++) {
@@ -9,7 +13,6 @@ public class Counter {
                 sum += i;
             }
         }
-
         return sum;
     }
 }

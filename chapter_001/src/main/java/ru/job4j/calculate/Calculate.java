@@ -1,11 +1,10 @@
 package ru.job4j.calculate;
 
 /**
- * Calculate
+ * Calculate.
  *
  * @author Vladimir Kovtun (vovan_men@mail.ru)
  */
-
 public class Calculate {
     /**
      * Adding numbers.
@@ -17,7 +16,6 @@ public class Calculate {
         double result = first + second;
         System.out.println(first + " + " + second + " = " + result);
     }
-
     /**
      * Subtract numbers.
      *
@@ -28,7 +26,6 @@ public class Calculate {
         double result = first - second;
         System.out.println(first + " - " + second + " = " + result);
     }
-
     /**
      * Divide numbers.
      *
@@ -39,7 +36,6 @@ public class Calculate {
         double result = first / second;
         System.out.println(first + " / " + second + " = " + result);
     }
-
     /**
      * Multiply numbers.
      *
@@ -50,12 +46,10 @@ public class Calculate {
         double result = first * second;
         System.out.println(first + " * " + second + " = " + result);
     }
-
     /**
      * Main.
      * @param args - args.
      */
-
     public static void main(String[] args) {
         add(1, 1);
         subtrack(10, 5);

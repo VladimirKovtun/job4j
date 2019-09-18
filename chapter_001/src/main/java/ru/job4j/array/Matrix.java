@@ -1,7 +1,10 @@
 package ru.job4j.array;
-
+/**
+ * Matrix.
+ *
+ * @author Vladimir Kovtun (vovan_men@mail.ru)
+ */
 public class Matrix {
-
     public int[][] multiple(int size) {
         int[][] matrix = new int[size][size];
         for (int i = 0; i < matrix.length; i++) {

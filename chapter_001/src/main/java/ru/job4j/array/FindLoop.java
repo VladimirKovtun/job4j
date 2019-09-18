@@ -1,7 +1,11 @@
 package ru.job4j.array;
 
+/**
+ * FindLoop.
+ *
+ * @author Vladimir Kovtun (vovan_men@mail.ru)
+ */
 public class FindLoop {
-
     public int indexOf(int[] data, int el) {
         int rst = -1;
         for (int i = 0; i < data.length; i++) {
@@ -12,7 +16,6 @@ public class FindLoop {
         }
         return rst;
     }
-
     public static int indexOf(int[] data, int el, int start, int finish) {
         int rst = -1;
         for (int i = start; i <= finish; i++) {

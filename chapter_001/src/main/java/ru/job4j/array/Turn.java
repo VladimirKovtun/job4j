@@ -1,7 +1,10 @@
 package ru.job4j.array;
-
+/**
+ * Turn.
+ *
+ * @author Vladimir Kovtun (vovan_men@mail.ru)
+ */
 public class Turn {
-
     public int[] back(int[] array) {
         int index = array.length;
         for (int i = 0; i < (index / 2); i++) {
