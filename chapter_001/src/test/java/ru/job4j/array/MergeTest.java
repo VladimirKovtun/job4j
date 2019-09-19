@@ -14,4 +14,20 @@ public class MergeTest {
         int[] result = Merge.merge(first, second);
         Assert.assertThat(result, Is.is(expect));
     }
+    @Test
+    public void whenMerge2ArrayAgain() {
+        int[] first = {5, 1, 2, 8, 1, 4};
+        int[] second = {1, 4};
+        int[] expect = {5, 1, 2, 8, 1, 4, 1, 4};
+        int[] result = Merge.merge(first, second);
+        Assert.assertThat(result, Is.is(expect));
+    }
+    @Test
+    public void whenMerge2ArrayAndAgain() {
+        int[] first = {8, 1, 4};
+        int[] second = {1, 4, 2, 4, 5};
+        int[] expect = {8, 1, 4, 1, 4, 2, 4, 5};
+        int[] result = Merge.merge(first, second);
+        Assert.assertThat(result, Is.is(expect));
+    }
 }
