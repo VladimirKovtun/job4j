@@ -20,4 +20,24 @@ public class MaxTest {
     public void whenLeftEqualsRight() {
         Assert.assertThat(Max.max(5, 5), Is.is(5));
     }
+
+    @Test
+    public void whenThirdMax() {
+        Assert.assertThat(Max.max(2, 5, 7), Is.is(7));
+    }
+
+    @Test
+    public void whenSecongMax() {
+        Assert.assertThat(Max.max(2, 19, 7), Is.is(19));
+    }
+
+    @Test
+    public void whenForthMax() {
+        Assert.assertThat(Max.max(2, 5, 7, 9), Is.is(9));
+    }
+
+    @Test
+    public void whenFirstMax() {
+        Assert.assertThat(Max.max(8, 5, 7, 2), Is.is(8));
+    }
 }
