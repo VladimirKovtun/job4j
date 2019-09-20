@@ -1,7 +1,5 @@
 package ru.job4j.condition;
 
-import ru.job4j.oop.Point;
-
 public class Triangle {
     private Point a;
     private Point b;

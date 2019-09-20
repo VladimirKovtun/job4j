@@ -3,7 +3,6 @@ package ru.job4j.condition;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.job4j.oop.Point;
 
 public class TriangleTest {
 
