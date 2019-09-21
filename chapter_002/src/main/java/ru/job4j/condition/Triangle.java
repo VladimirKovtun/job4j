@@ -12,9 +12,12 @@ public class Triangle {
     }
 
     private boolean exist(Point a, Point b, Point c) {
-        return a.distance(b) + b.distance(c) > c.distance(a) &&
-                a.distance(b) + c.distance(a) > b.distance(c) &&
-                b.distance(c) + c.distance(a) > a.distance(b);
+        double ab = a.distance(b);
+        double bc = b.distance(c);
+        double ca = c.distance(a);
+        return ab + bc > ca &&
+               ab + ca > bc &&
+               bc + ca > ab;
     }
 
     private double period(Point a, Point b, Point c) {
