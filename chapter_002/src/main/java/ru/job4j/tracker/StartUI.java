@@ -27,9 +27,9 @@ public class StartUI {
                 System.out.println("Enter name: ");
                 String name = scanner.nextLine();
                 System.out.println("Enter ID item: ");
-                String ID = String.valueOf(scanner.nextLong());
+                String id = String.valueOf(scanner.nextLong());
                 Item item = new Item(name);
-                if (tracker.replace(ID, item)) {
+                if (tracker.replace(id, item)) {
                     System.out.println("Item replace.");
                 } else {
                     System.out.println("Item not replace.");
@@ -37,8 +37,8 @@ public class StartUI {
             } else if (select == 3) {
                 System.out.println("**Delete item**");
                 System.out.println("Enter ID item which be delete: ");
-                String ID = String.valueOf(scanner.nextLong());
-                if (tracker.delete(ID)) {
+                String id = String.valueOf(scanner.nextLong());
+                if (tracker.delete(id)) {
                     System.out.println("Item delete.");
                 } else {
                     System.out.println("Item not delete");
@@ -46,8 +46,8 @@ public class StartUI {
             } else if (select == 4) {
                 System.out.println("**Find item by ID**");
                 System.out.println("Enter ID item: ");
-                String ID = String.valueOf(scanner.nextLong());
-                Item item = tracker.findById(ID);
+                String id = String.valueOf(scanner.nextLong());
+                Item item = tracker.findById(id);
                 if (item != null) {
                     System.out.printf("Item ID %s, Item name %s", item.getId(), item.getName());
                 } else {
@@ -67,22 +67,22 @@ public class StartUI {
                     System.out.println("Null.");
                 }
             } else if (select == 6) {
-                System.out.println("Программа будет завершена...");
+                System.out.println("The program will be closed...");
                 isExit = true;
             } else {
-                System.out.println("Введены некорректные данные.\n" + "Повтороите ввод.");
+                System.out.println("Incorrect data entered.\n" + "Retype please.");
             }
         }
     }
 
     private void showMenu() {
-        System.out.println("Menu input:\n" +
-                           "1. Add new item.\n" +
-                           "2. Delete item.\n" +
-                           "3. Edit item.\n" +
-                           "4. Find item by id.\n" +
-                           "5. Find items by name.\n" +
-                           "6. Exit Programm.");
+        System.out.println("Menu input:\n"
+                           + "1. Add new item.\n"
+                           + "2. Delete item.\n"
+                           + "3. Edit item.\n"
+                           + "4. Find item by id.\n"
+                           + "5. Find items by name.\n"
+                           + "6. Exit Programm.");
     }
 
     public static void main(String[] args) {

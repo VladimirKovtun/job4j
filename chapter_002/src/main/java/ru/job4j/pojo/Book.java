@@ -4,7 +4,9 @@ public class Book {
     private String title;
     private int pageCount;
 
-    public Book() {}
+    public Book() {
+
+    }
 
     public Book(String title, int pageCount) {
         this.title = title;

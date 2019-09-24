@@ -7,7 +7,7 @@ public class Customer extends Profession {
     private String nameOrganization;
 
     public Customer(String name, String surname, Date deadLine, String organization) {
-        super(name,surname);
+        super(name, surname);
         this.deadLine = deadLine;
         nameOrganization = organization;
     }
