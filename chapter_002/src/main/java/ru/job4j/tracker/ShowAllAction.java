@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.Arrays;
+
 public class ShowAllAction implements UserAction {
     @Override
     public String name() {
@@ -8,11 +10,12 @@ public class ShowAllAction implements UserAction {
 
     @Override
     public boolean execute(Tracker tracker, Input input) {
-        System.out.println("**Show all items**");
+        //System.out.println("**Show all items**");
         Item[] allItems = tracker.findAll();
-        for (Item item : allItems) {
-            System.out.printf("Item ID %s, Item name %s", item.getId(), item.getName());
-        }
+        System.out.print(Arrays.toString(allItems));
+        /*for (Item item : allItems) {
+            System.out.printf("Item ID %s, Item name %s%n", item.getId(), item.getName());
+        }*/
         return true;
     }
 }
