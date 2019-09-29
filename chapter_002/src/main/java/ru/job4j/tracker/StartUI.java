@@ -29,7 +29,7 @@ public class StartUI {
                 new FindByNameAction(),
                 new FindByIdAction(),
                 new ExitAction()};
-        Input input = new ValidateInput();
+        Input input = new ValidateInput(new ConsoleInput());
         new StartUI().init(input, new Tracker(), userActions);
     }
 }

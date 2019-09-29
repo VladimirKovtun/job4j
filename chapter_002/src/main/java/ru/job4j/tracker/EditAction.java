@@ -9,7 +9,7 @@ public class EditAction implements UserAction {
     @Override
     public boolean execute(Tracker tracker, Input input) {
         String name = input.askStr("**Edit item**\nEnter name: ");
-        String id = String.valueOf(input.askLong("Enter ID item: "));
+        String id = input.askStr("Enter ID item: ");
         Item item = new Item(name);
         if (tracker.replace(id, item)) {
             System.out.println("Item replace.");

@@ -11,13 +11,8 @@ public class ConsoleInput implements Input {
     }
 
     @Override
-    public long askLong(String question) {
-        return Long.valueOf(askStr(question));
-    }
-
-    @Override
     public long askLong(String question, int max) {
-        long select = askLong(question);
+        long select = Long.valueOf(askStr(question));
         if (select < 0 || select >= max) {
             throw new IllegalStateException(String.format("Out of about %s > [0, %s]", select, max));
         }
