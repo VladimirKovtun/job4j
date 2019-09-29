@@ -17,4 +17,9 @@ public class StubInput implements Input {
     public long askLong(String question) {
         return Long.valueOf(askStr(question));
     }
+
+    @Override
+    public long askLong(String question, int max) {
+        return askLong(question);
+    }
 }

@@ -12,7 +12,15 @@ public class ConsoleInput implements Input {
 
     @Override
     public long askLong(String question) {
-        System.out.printf("%s", question);
-        return new Scanner(System.in).nextLong();
+        return Long.valueOf(askStr(question));
+    }
+
+    @Override
+    public long askLong(String question, int max) {
+        long select = askLong(question);
+        if (select < 0 || select >= max) {
+            throw new IllegalStateException(String.format("Out of about %s > [0, %s]", select, max));
+        }
+        return select;
     }
 }
