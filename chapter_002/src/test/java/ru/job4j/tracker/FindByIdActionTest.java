@@ -28,7 +28,7 @@ public class FindByIdActionTest {
         Item item = new Item("Test");
         tracker.add(item);
         String[] answers = {item.getId()};
-        new FindByIdAction().execute(tracker, new StubInput(answers));
+        new FindByIdAction(0, "Find item by ID.").execute(tracker, new StubInput(answers));
         Assert.assertThat(new String(out.toByteArray()),
                           Is.is("Item ID " + item.getId() + ", Item name " + item.getName()));
     }

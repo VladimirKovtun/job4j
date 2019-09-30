@@ -8,8 +8,8 @@ public class StartUITest {
 
     @Test
     public void whenExit() {
-        StubAction stubAction = new StubAction();
-        new StartUI().init(new StubInput(new String[]{"0"}), new Tracker(), new UserAction[] {stubAction});
+        StubAction stubAction = new StubAction(0, "Stub action.");
+        new StartUI().init(new StubInput(new String[]{"0"}), new Tracker(), new BaseAction[] {stubAction});
         Assert.assertThat(stubAction.isCall(), Is.is(true));
     }
 }

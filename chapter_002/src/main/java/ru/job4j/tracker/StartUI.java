@@ -3,7 +3,7 @@ package ru.job4j.tracker;
 
 public class StartUI {
 
-    public void init(Input input, Tracker tracker, UserAction[] userActions) {
+    public void init(Input input, Tracker tracker, BaseAction[] userActions) {
         boolean run = true;
         while (run) {
             showMenu(userActions);
@@ -13,22 +13,22 @@ public class StartUI {
         }
     }
 
-    private void showMenu(UserAction[] userActions) {
+    private void showMenu(BaseAction[] userActions) {
         System.out.println("");
         System.out.println("Menu input:");
-        for (int i = 0; i < userActions.length; i++) {
-            System.out.printf("%d. %s%n", i, userActions[i].name());
+        for (BaseAction action : userActions) {
+            System.out.println(action.info());
         }
     }
 
     public static void main(String[] args) {
-        UserAction[] userActions = {new CreateAction(),
-                new ShowAllAction(),
-                new DeleteAction(),
-                new EditAction(),
-                new FindByNameAction(),
-                new FindByIdAction(),
-                new ExitAction()};
+        BaseAction[] userActions = {new CreateAction(0, "Create item."),
+                new ShowAllAction(1, "Show all items."),
+                new DeleteAction(2, "Delete item."),
+                new EditAction(3, "Replace item."),
+                new FindByNameAction(4, "Find items by name."),
+                new FindByIdAction(5, "Find item by ID."),
+                new ExitAction(6, "Exit program.")};
         Input input = new ValidateInput(new ConsoleInput());
         new StartUI().init(input, new Tracker(), userActions);
     }

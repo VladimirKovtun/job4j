@@ -28,7 +28,7 @@ public class ShowAllActionTest {
         Tracker tracker = new Tracker();
         tracker.add(new Item("First"));
         tracker.add(new Item("Second"));
-        new ShowAllAction().execute(tracker, new StubInput(new String[0]));
+        new ShowAllAction(0, "Show all items.").execute(tracker, new StubInput(new String[0]));
         Assert.assertThat(new String(out.toByteArray()), Is.is(Arrays.toString(tracker.findAll())));
     }
 }

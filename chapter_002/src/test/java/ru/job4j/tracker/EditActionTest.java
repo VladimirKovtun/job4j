@@ -12,7 +12,7 @@ public class EditActionTest {
         Item first = new Item("First");
         tracker.add(first);
         String[] answers = {"Second", first.getId()};
-        new EditAction().execute(tracker, new StubInput(answers));
+        new EditAction(0, "Replace item.").execute(tracker, new StubInput(answers));
         Item second = tracker.findById(first.getId());
         Assert.assertThat(second.getName(), Is.is("Second"));
 
