@@ -1,10 +1,11 @@
 package ru.job4j.search.ru.job4j.list;
 
 import org.hamcrest.core.Is;
-import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -12,7 +13,7 @@ public class ConvertList2ArrayTest {
 
     @Test
     public void when7ElementsThen9() {
-        ConvertList2Array list = new ConvertList2Array();
+        ConvertList list = new ConvertList();
         int[][] result = list.toArray(
                 Arrays.asList(1, 2, 3, 4, 5, 6, 7),
                 3
@@ -27,7 +28,7 @@ public class ConvertList2ArrayTest {
 
     @Test
     public void when9ElementThen12() {
-        ConvertList2Array convert = new ConvertList2Array();
+        ConvertList convert = new ConvertList();
         int[][] result = convert.toArray(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9), 4);
         int[][] expect = {
                 {1, 2, 3},
@@ -38,4 +39,12 @@ public class ConvertList2ArrayTest {
         assertThat(result, Is.is(expect));
     }
 
+    @Test
+    public void whenListMassToListOfInteger() {
+        List<int[]> arrats = new ArrayList<>(Arrays.asList(new int[]{1, 2}, new int[]{3, 4, 5, 6} ));
+        List<Integer> result = new ConvertList().convert(arrats);
+        List<Integer> expect = Arrays.asList(1, 2, 3, 4, 5, 6);
+        assertThat(result, Is.is(expect));
+
+    }
 }

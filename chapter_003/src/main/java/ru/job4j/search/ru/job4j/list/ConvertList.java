@@ -1,9 +1,9 @@
 package ru.job4j.search.ru.job4j.list;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ConvertList2Array {
+public class ConvertList {
 
     public int[][] toArray(List<Integer> list, int rows) {
         int cells = list.size() % rows == 0 ? list.size() / rows : (list.size() / rows) + 1;
@@ -18,5 +18,15 @@ public class ConvertList2Array {
             array[i][j++] = in;
         }
         return array;
+    }
+
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> listInteger = new ArrayList<>();
+        for (int[] mas : list) {
+            for (int i : mas) {
+                listInteger.add(i);
+            }
+        }
+        return listInteger;
     }
 }
