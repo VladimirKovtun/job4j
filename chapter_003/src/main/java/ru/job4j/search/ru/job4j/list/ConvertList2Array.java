@@ -11,15 +11,11 @@ public class ConvertList2Array {
         int i = 0;
         int j = 0;
         for (Integer in : list) {
-            if (j == 0 || j % cells != 0) {
-                array[i][j] = in;
-                j++;
-            } else {
+            if (j == cells) {
                 j = 0;
                 i++;
-                array[i][j] = in;
-                j++;
             }
+            array[i][j++] = in;
         }
         return array;
     }
