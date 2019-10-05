@@ -44,7 +44,7 @@ public class CoffeMachineTest {
     @Test
     public void when30RubAndCoffee34ThenChangeIsOne1RubAndFive5Rub() {
         int[] result = CoffeMachine.changes(30, 34);
-        int[] expect = {};
+        int[] expect = {-1};
         Assert.assertThat(result, Is.is(expect));
     }
 }

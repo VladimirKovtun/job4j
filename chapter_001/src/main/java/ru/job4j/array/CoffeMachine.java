@@ -2,41 +2,35 @@ package ru.job4j.array;
 
 import java.util.Arrays;
 
+
 public class CoffeMachine {
 
     public static int[] changes(int value, int price) {
         int change = value - price;
-        int[] oddMoney;
-        if (change < 0) {
-            System.out.println("Денег не достаточно!");
-            oddMoney = new int[0];
-        } else if (change % 5 == 0) {
-            oddMoney = new int[change / 5];
-            Arrays.fill(oddMoney, 5);
-        } else if (change % 5 < 3) {
-            oddMoney = new int[(change / 5) + 1];
-            Arrays.fill(oddMoney, 1, oddMoney.length, 5);
-            if (change % 5 == 1) {
-                Arrays.fill(oddMoney, 0, 1, 1);
-            } else {
-                Arrays.fill(oddMoney, 0, 1, 2);
-            }
-        } else {
-            oddMoney = new int[(change / 5) + 2];
-            Arrays.fill(oddMoney, 2, oddMoney.length, 5);
-            if (change % 5 == 3) {
-                Arrays.fill(oddMoney, 0, 1, 1);
-                Arrays.fill(oddMoney, 1, 2, 2);
-            } else {
-                Arrays.fill(oddMoney, 0, 2, 2);
-            }
+        if (change == 0) {
+            return new int[]{0};
         }
-        return oddMoney;
-    }
+        if (change < 0){
+            return new int[]{-1};
+        }
+        int array = change % 5 == 0 ? change / 5 :
+                    change % 5 < 3 ? (change / 5) + 1 : (change / 5) + 2;
+        int[] oddMoney = new int[array];
+        int index = 0;
+        while (change > 0) {
+             if (change % 5 == 1 || change % 5 == 3){
+                oddMoney[index++] = 1;
+                change -= 1;
+             } else if (change % 5 == 2 || change % 5 == 4) {
+                 oddMoney[index++] = 2;
+                 change -= 2;
+             } else {
+                 oddMoney[index++] = 5;
+                 change -= 5;
+             }
+         }
 
-    public static void main(String[] args) {
-        int[] changes = CoffeMachine.changes(7, 35);
-        System.out.println(Arrays.toString(changes));
+        return oddMoney;
     }
 }
 
