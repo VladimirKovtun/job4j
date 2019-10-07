@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ShowAllActionTest {
@@ -18,6 +19,7 @@ public class ShowAllActionTest {
     public void loadOut() {
         System.setOut(new PrintStream(out));
     }
+
     @After
     public void backOutput() {
         System.setOut(stdOut);
@@ -28,7 +30,7 @@ public class ShowAllActionTest {
         Tracker tracker = new Tracker();
         tracker.add(new Item("First"));
         tracker.add(new Item("Second"));
-        new ShowAllAction(0, "Show all items.").execute(tracker, new StubInput(new String[0]));
-        Assert.assertThat(new String(out.toByteArray()), Is.is(Arrays.toString(tracker.findAll())));
+        new ShowAllAction(0, "Show all items.").execute(tracker, new StubInput(new ArrayList<>()));
+        Assert.assertThat(new String(out.toByteArray()), Is.is(tracker.findAll().toString()));
     }
 }

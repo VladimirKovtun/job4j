@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.List;
 
 public class FindByIdActionTest {
     private final PrintStream stdOut = System.out;
@@ -17,6 +19,7 @@ public class FindByIdActionTest {
     public void loadOut() {
         System.setOut(new PrintStream(out));
     }
+
     @After
     public void backOutput() {
         System.setOut(stdOut);
@@ -27,9 +30,9 @@ public class FindByIdActionTest {
         Tracker tracker = new Tracker();
         Item item = new Item("Test");
         tracker.add(item);
-        String[] answers = {item.getId()};
+        List<String> answers = Arrays.asList(item.getId());
         new FindByIdAction(0, "Find item by ID.").execute(tracker, new StubInput(answers));
         Assert.assertThat(new String(out.toByteArray()),
-                          Is.is("Item ID " + item.getId() + ", Item name " + item.getName()));
+                Is.is(String.format("Item ID %s, Item name %s", item.getId(), item.getName())));
     }
 }

@@ -4,6 +4,9 @@ import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class TrackerTest {
 
     @Test
@@ -43,7 +46,7 @@ public class TrackerTest {
         Item second = new Item("second");
         tracker.add(second);
         tracker.delete(first.getId());
-        Item[] expect = {second};
+        List<Item> expect = Arrays.asList(second);
         Assert.assertThat(tracker.findAll(), Is.is(expect));
     }
 
@@ -57,7 +60,7 @@ public class TrackerTest {
         Item third = new Item("third");
         tracker.add(third);
         tracker.delete(second.getId());
-        Item[] expect = {first, third};
+        List<Item> expect = Arrays.asList(first, third);
         Assert.assertThat(tracker.findAll(), Is.is(expect));
     }
 
@@ -70,7 +73,7 @@ public class TrackerTest {
         tracker.add(second);
         Item third = new Item("third");
         tracker.add(third);
-        Item[] expect = {first, second, third};
+        List<Item> expect = Arrays.asList(first, second, third);
         Assert.assertThat(tracker.findAll(), Is.is(expect));
     }
 
@@ -83,7 +86,7 @@ public class TrackerTest {
         tracker.add(second);
         Item third = new Item("second");
         tracker.add(third);
-        Item[] expect = {second, third};
+        List<Item> expect = Arrays.asList(second, third);
         Assert.assertThat(tracker.findByName("second"), Is.is(expect));
     }
 

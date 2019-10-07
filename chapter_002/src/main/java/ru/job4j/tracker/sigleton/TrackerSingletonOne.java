@@ -3,6 +3,8 @@ package ru.job4j.tracker.sigleton;
 import ru.job4j.tracker.Item;
 import ru.job4j.tracker.Tracker;
 
+import java.util.List;
+
 public enum  TrackerSingletonOne {
     INSTANCE();
     private static final Tracker tracker = new Tracker();
@@ -19,11 +21,11 @@ public enum  TrackerSingletonOne {
         return tracker.delete(id);
     }
 
-    public Item[] findAll() {
+    public List<Item> findAll() {
         return tracker.findAll();
     }
 
-    public Item[] findByName(String key) {
+    public List<Item> findByName(String key) {
         return tracker.findByName(key);
     }
 

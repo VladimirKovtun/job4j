@@ -21,7 +21,7 @@ public class ValidateInput implements Input {
                 inValid = false;
             } catch (IllegalStateException ise) {
                 System.out.println("Please select key from menu.");
-            } catch (NumberFormatException nfe){
+            } catch (NumberFormatException nfe) {
                 System.out.println("Please enter validate data.");
             }
         } while (inValid);

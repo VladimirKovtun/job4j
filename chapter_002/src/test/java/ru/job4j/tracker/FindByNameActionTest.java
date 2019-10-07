@@ -8,7 +8,9 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class FindByNameActionTest {
     private final PrintStream stdOut = System.out;
@@ -18,6 +20,7 @@ public class FindByNameActionTest {
     public void loadOut() {
         System.setOut(new PrintStream(out));
     }
+
     @After
     public void backOutput() {
         System.setOut(stdOut);
@@ -29,8 +32,8 @@ public class FindByNameActionTest {
         tracker.add(new Item("First"));
         tracker.add(new Item("Second"));
         tracker.add(new Item("Second"));
-        String[] answers = {"Second"};
+        List<String> answers = Arrays.asList("Second");
         new FindByNameAction(0, "Find items by name.").execute(tracker, new StubInput(answers));
-        Assert.assertThat(new String(out.toByteArray()), Is.is(Arrays.toString(tracker.findByName("Second"))));
+        Assert.assertThat(new String(out.toByteArray()), Is.is(tracker.findByName("Second").toString()));
     }
 }

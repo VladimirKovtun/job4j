@@ -1,6 +1,6 @@
 package ru.job4j.tracker;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class ShowAllAction extends BaseAction {
 
@@ -10,11 +10,8 @@ public class ShowAllAction extends BaseAction {
 
     @Override
     public boolean execute(Tracker tracker, Input input) {
-        Item[] allItems = tracker.findAll();
-        System.out.print(Arrays.toString(allItems));
-        /*for (Item item : allItems) {
-            System.out.printf("Item ID %s, Item name %s%n", item.getId(), item.getName());
-        }*/
+        List<Item> allItems = tracker.findAll();
+        System.out.print(allItems);
         return true;
     }
 }

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 public class ValidateInputTest {
     private PrintStream stdOut = System.out;
@@ -25,8 +26,8 @@ public class ValidateInputTest {
 
     @Test
     public void whenInvalidInput() {
-        ValidateInput input = new ValidateInput(new StubInput(new String[]{
-            "invalid", "1"}));
+        ValidateInput input = new ValidateInput(new StubInput(Arrays.asList(
+                "invalid", "1")));
         input.askLong("Enter", 1);
         Assert.assertThat(new String(out.toByteArray()), Is.is(String.format("Please enter validate data.%n")));
     }
