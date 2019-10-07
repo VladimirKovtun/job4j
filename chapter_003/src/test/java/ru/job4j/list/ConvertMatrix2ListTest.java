@@ -1,9 +1,8 @@
-package ru.job4j.search.ru.job4j.list;
+package ru.job4j.list;
 
 import org.hamcrest.core.Is;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
