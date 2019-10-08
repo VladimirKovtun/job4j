@@ -10,14 +10,17 @@ public class ListCompare implements Comparator<String> {
         int count = 0;
         int length = o1.length() < o2.length() ? o1.length() : o2.length();
         for (int i = 0; i < length; i++) {
-            if (o1.charAt(i) < o2.charAt(i) || (count == (length - 1) && o1.length() != o2.length())) {
+            count++;
+            if (o1.charAt(i) < o2.charAt(i)) {
                 result = -1;
                 break;
             } else if (o1.charAt(i) > o2.charAt(i)) {
                 result = 1;
                 break;
+            } else if ((count == length && o1.length() != o2.length())) {
+                result = -1;
             }
-            count++;
+
         }
         return result;
     }
