@@ -59,4 +59,14 @@ public class ListCompareTest {
         assertThat(rst, lessThan(0));
     }
 
+    @Test
+    public void whenLeftLessThanRightResultShouldBePositiveAgain () {
+        ListCompare compare = new ListCompare();
+        int rst = compare.compare(
+                "Ivanov",
+                "Ivanosa"
+        );
+        assertThat(rst, greaterThan(0));
+    }
+
 }
