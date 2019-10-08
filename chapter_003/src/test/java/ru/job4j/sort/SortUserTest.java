@@ -8,21 +8,21 @@ import static org.junit.Assert.*;
 public class SortUserTest {
 
     @Test
-    public void whenSort() {
+    public void whenSortByAge() {
         Set<User> result = new SortUser().sort(Arrays.asList(
                 new User("Vadim", 15),
-                new User("Almaz", 15),
-                new User("Xandr", 33),
+                new User("Almaz", 23),
+                new User("Xandr", 12),
                 new User("Alex", 33),
                 new User("Ivan", 25)
         ));
         assertThat(result.toString(), Is.is(Arrays.asList(
-                new User("Almaz", 15),
+                new User("Xandr", 12),
                 new User("Vadim", 15),
+                new User("Almaz", 23),
                 new User("Ivan", 25),
-                new User("Alex", 33),
-                new User("Xandr", 33
-                )).toString()));
+                new User("Alex", 33)
+                ).toString()));
     }
 
     @Test
@@ -39,8 +39,8 @@ public class SortUserTest {
                             new User("Max", 15),
                             new User("Alex", 33),
                             new User("Xandr", 33),
-                            new User("Konstantin", 15
-                            ))));
+                            new User("Konstantin", 15)
+                            )));
     }
 
     @Test
