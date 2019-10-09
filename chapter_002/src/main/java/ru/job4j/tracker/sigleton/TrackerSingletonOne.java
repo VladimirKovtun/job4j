@@ -7,29 +7,29 @@ import java.util.List;
 
 public enum  TrackerSingletonOne {
     INSTANCE();
-    private static final Tracker tracker = new Tracker();
+    private static final Tracker TRACKER = new Tracker();
 
     public Item add(Item item) {
-        return tracker.add(item);
+        return TRACKER.add(item);
     }
 
     public boolean replace(String id, Item item) {
-        return tracker.replace(id, item);
+        return TRACKER.replace(id, item);
     }
 
     public boolean delete(String id) {
-        return tracker.delete(id);
+        return TRACKER.delete(id);
     }
 
     public List<Item> findAll() {
-        return tracker.findAll();
+        return TRACKER.findAll();
     }
 
     public List<Item> findByName(String key) {
-        return tracker.findByName(key);
+        return TRACKER.findByName(key);
     }
 
     public Item findById(String id) {
-        return tracker.findById(id);
+        return TRACKER.findById(id);
     }
 }

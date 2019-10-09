@@ -13,7 +13,8 @@ public class Matches {
         while (sum < 11) {
             count++;
             System.out.printf("На столе осталось %d спичек.%n", 11 - sum);
-            while (!(((input = scanner.nextInt()) < 4) && input > 0)) {
+            input = scanner.nextInt();
+            while (!((input < 4) && input > 0)) {
                 System.out.println("Введите корректные данные.");
             }
             sum += input;

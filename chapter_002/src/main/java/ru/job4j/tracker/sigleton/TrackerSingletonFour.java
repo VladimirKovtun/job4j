@@ -13,7 +13,7 @@ public class TrackerSingletonFour {
     }
 
     public static TrackerSingletonFour getInstance() {
-        return Holder.instance;
+        return Holder.INSTANCE;
     }
 
 
@@ -42,6 +42,6 @@ public class TrackerSingletonFour {
     }
 
     private static final class Holder {
-        private static final TrackerSingletonFour instance = new TrackerSingletonFour();
+        private static final TrackerSingletonFour INSTANCE = new TrackerSingletonFour();
     }
 }

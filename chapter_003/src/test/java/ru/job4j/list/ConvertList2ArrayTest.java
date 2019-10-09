@@ -21,7 +21,7 @@ public class ConvertList2ArrayTest {
         int[][] expect = {
                 {1, 2, 3},
                 {4, 5, 6},
-                {7, 0 ,0}
+                {7, 0, 0}
         };
         assertThat(result, Is.is(expect));
     }
@@ -41,7 +41,8 @@ public class ConvertList2ArrayTest {
 
     @Test
     public void whenListMassToListOfInteger() {
-        List<int[]> arrats = new ArrayList<>(Arrays.asList(new int[]{1, 2}, new int[]{3, 4, 5, 6} ));
+        List<int[]> arrats = new ArrayList<>(Arrays.asList(
+                new int[]{1, 2}, new int[]{3, 4, 5, 6}));
         List<Integer> result = new ConvertList().convert(arrats);
         List<Integer> expect = Arrays.asList(1, 2, 3, 4, 5, 6);
         assertThat(result, Is.is(expect));

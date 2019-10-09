@@ -13,9 +13,9 @@ public class CoffeMachine {
         if (change < 0) {
             return new int[]{-1};
         }
-        int array = change % 10 == 0 ? change / 10 :
-                (change % 10) % 5 == 0 ? (change / 10) + 1 :
-                        (change / 5) < 3 ? (change / 10) + 2 : (change / 10) + 3;
+        int array = change % 10 == 0 ? change / 10
+               : (change % 10) % 5 == 0 ? (change / 10) + 1
+                       : (change / 5) < 3 ? (change / 10) + 2 : (change / 10) + 3;
         int[] coins = new int[array];
         int index = 0;
         while (change > 0) {
