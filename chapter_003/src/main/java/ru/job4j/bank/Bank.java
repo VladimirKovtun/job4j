@@ -17,12 +17,7 @@ public class Bank {
 
     public void deleteUser(User user) {
         if (user != null && dataBase.containsKey(user)) {
-            for (User next : dataBase.keySet()) {
-                if (user.equals(next)) {
-                    dataBase.remove(user);
-                    break;
-                }
-            }
+            dataBase.remove(user);
         } else {
             System.out.println("User not deleted.");
         }
@@ -66,13 +61,11 @@ public class Bank {
     public Account getAcc(String passport, String requisite) {
         Account account = null;
         List<Account> userAccounts = getUserAccounts(passport);
-        if (userAccounts != null) {
-            for (Account acc : userAccounts) {
-                if (acc.getRequisites().equals(requisite)) {
-                    int i = userAccounts.indexOf(acc);
-                    account = userAccounts.get(i);
-                    break;
-                }
+        for (Account acc : userAccounts) {
+            if (acc.getRequisites().equals(requisite)) {
+                int i = userAccounts.indexOf(acc);
+                account = userAccounts.get(i);
+                break;
             }
         }
         return account;
