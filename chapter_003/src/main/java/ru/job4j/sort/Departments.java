@@ -2,7 +2,6 @@ package ru.job4j.sort;
 
 
 import java.util.*;
-import java.util.regex.Pattern;
 
 public class Departments {
 
@@ -15,19 +14,17 @@ public class Departments {
             @Override
             public int compare(Org o1, Org o2) {
                 int result = 0;
-                String[] nameThis = o1.name.replaceAll(Pattern.quote("\\"), "\\\\").split("\\\\");
-                String[] nameO = o2.name.replaceAll(Pattern.quote("\\"), "\\\\").split("\\\\");
-                int length = nameThis.length < nameO.length ? nameThis.length : nameO.length;
+                int length = o1.names.length < o2.names.length ? o1.names.length : o2.names.length;
                 int count = 0;
                 while (count != length) {
-                    if (CharSequence.compare(nameO[count], nameThis[count]) != 0) {
-                        result = CharSequence.compare(nameO[count], nameThis[count]);
+                    if (CharSequence.compare(o2.names[count], o1.names[count]) != 0) {
+                        result = CharSequence.compare(o2.names[count], o1.names[count]);
                         break;
                     }
                     count++;
                 }
-                if ((result == 0 && nameThis.length != nameO.length)) {
-                    result = nameThis.length > nameO.length ? 1 : -1;
+                if ((result == 0 && o1.names.length != o2.names.length)) {
+                    result = o1.names.length > o2.names.length ? 1 : -1;
                 }
                 return result;
             }
@@ -35,7 +32,8 @@ public class Departments {
     }
 
     final static class Org implements Comparable<Org> {
-        String name;
+        private String name;
+        private String[] names;
 
         public String getName() {
             return name;
@@ -43,24 +41,23 @@ public class Departments {
 
         public Org(String name) {
             this.name = name;
+            names = name.split("\\\\");
         }
 
         @Override
         public int compareTo(Org o) {
             int result = 0;
-            String[] nameThis = this.name.replaceAll(Pattern.quote("\\"), "\\\\").split("\\\\");
-            String[] nameO = o.name.replaceAll(Pattern.quote("\\"), "\\\\").split("\\\\");
-            int length = nameThis.length < nameO.length ? nameThis.length : nameO.length;
+            int length = this.names.length < o.names.length ? this.names.length : o.names.length;
             int count = 0;
             while (count != length) {
-                if (CharSequence.compare(nameThis[count], nameO[count]) != 0) {
-                    result = CharSequence.compare(nameThis[count], nameO[count]);
+                if (CharSequence.compare(this.names[count], o.names[count]) != 0) {
+                    result = CharSequence.compare(this.names[count], o.names[count]);
                     break;
                 }
                 count++;
             }
-            if ((result == 0 && nameThis.length != nameO.length)) {
-                result = nameThis.length > nameO.length ? 1 : -1;
+            if ((result == 0 && this.names.length != o.names.length)) {
+                result = this.names.length > o.names.length ? 1 : -1;
             }
             return result;
         }
@@ -90,14 +87,12 @@ public class Departments {
 
     public static List<Org> convert(List<Org> deps) {
         Set<Org> dep = new HashSet<>(deps);
-        String separator = "\\";
         for (Org org : deps) {
             String name = org.getName();
-            String[] strArr = name.replaceAll(Pattern.quote(separator), "\\\\").split("\\\\");
-            if (strArr.length > 1) {
-                int i = strArr.length - 1;
+            if (org.names.length > 1) {
+                int i = org.names.length - 1;
                 while (name.length() > 2 && i > 0) {
-                    int i1 = name.length() - strArr[i--].length() - 1;
+                    int i1 = name.length() - org.names[i--].length() - 1;
                     name = name.substring(0, i1);
                     dep.add(new Departments.Org(name));
                 }
