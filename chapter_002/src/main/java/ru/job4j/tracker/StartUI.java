@@ -1,40 +1,29 @@
 package ru.job4j.tracker;
 
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class StartUI {
+    private final Input input;
+    private final Tracker tracker;
+    private final Consumer<String> output;
 
-    public void init(Input input, Tracker tracker, List<BaseAction> userActions) {
-        boolean run = true;
-        while (run) {
-            showMenu(userActions);
-            int select = (int) input.askLong("Select: ", userActions.size());
-            UserAction userAction = userActions.get(select);
-            run = userAction.execute(tracker, input);
-        }
+    public StartUI(Input input, Tracker tracker, Consumer<String> output) {
+        this.input = input;
+        this.tracker = tracker;
+        this.output = output;
     }
 
-    private void showMenu(List<BaseAction> userActions) {
-        System.out.println("");
-        System.out.println("Menu input:");
-        for (BaseAction action : userActions) {
-            System.out.println(action.info());
-        }
+    public void init() {
+        MenuTracker menu = new MenuTracker(input, tracker, output);
+        menu.fillActions();
+        do {
+            menu.show();
+            menu.select((int) input.askLong("Select: ", menu.actionSize()));
+        }while (!"y".equalsIgnoreCase(input.askStr("Exit?(y): ")));
     }
 
     public static void main(String[] args) {
-        ArrayList<BaseAction> userActions = new ArrayList<>();
-        userActions.add(new CreateAction(0, "Create item."));
-        userActions.add(new ShowAllAction(1, "Show all items."));
-        userActions.add(new DeleteAction(2, "Delete item."));
-        userActions.add(new EditAction(3, "Replace item."));
-        userActions.add(new FindByNameAction(4, "Find items by name."));
-        userActions.add(new FindByIdAction(5, "Find item by ID."));
-        userActions.add(new ExitAction(6, "Exit program."));
-
         Input input = new ValidateInput(new ConsoleInput());
-        new StartUI().init(input, new Tracker(), userActions);
+        new StartUI(input, new Tracker(), System.out::println).init();
     }
 }
