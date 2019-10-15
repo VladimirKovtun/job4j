@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -48,6 +49,17 @@ public class SchoolTest {
         assertThat(result.toString(), Is.is(Arrays.asList(
                                                new Student(34),
                                                new Student(23)
+        ).toString()));
+    }
+
+    @Test
+    public void whenListToMap() {
+        List<Student> students = Arrays.asList(new Student(34, "Petr", "Ivanov"),
+                new Student(55, "Ivan", "Petrov"));
+        Map<String, Student> result = new School().collectToMap(students);
+        assertThat(result.values().toString(), Is.is(Arrays.asList(
+                new Student(55, "Ivan", "Petrov"),
+                new Student(34, "Petr", "Ivanov")
         ).toString()));
     }
 }
