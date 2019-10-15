@@ -14,7 +14,7 @@ public class DeleteActionTest {
         Item item = new Item("new item");
         tracker.add(item);
         List<String> answers = Arrays.asList(item.getId());
-        new DeleteAction(0, "Delete item.").execute(tracker, new StubInput(answers));
+        new DeleteAction(0, "Delete item.", System.out::print).execute(tracker, new StubInput(answers));
         List<Item> newItems = tracker.findByName("new item");
         Assert.assertNull(newItems);
     }

@@ -1,9 +1,11 @@
 package ru.job4j.tracker;
 
+import java.util.function.Consumer;
+
 public class DeleteAction extends BaseAction {
 
-    public DeleteAction(int key, String name) {
-        super(key, name);
+    public DeleteAction(int key, String name, Consumer<String> output) {
+        super(key, name, output);
     }
 
     @Override

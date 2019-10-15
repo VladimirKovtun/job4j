@@ -29,8 +29,8 @@ public class StartUI {
         ArrayList<BaseAction> userActions = new ArrayList<>();
         userActions.add(new CreateAction(0, "Create item."));
         userActions.add(new ShowAllAction(1, "Show all items.", System.out::print));
-        userActions.add(new DeleteAction(2, "Delete item."));
-        userActions.add(new EditAction(3, "Replace item."));
+        userActions.add(new DeleteAction(2, "Delete item.", System.out::print));
+        userActions.add(new EditAction(3, "Replace item.", System.out::print));
         userActions.add(new FindByNameAction(4, "Find items by name.", System.out::print));
         userActions.add(new FindByIdAction(5, "Find item by ID.", System.out::print));
         userActions.add(new ExitAction(6, "Exit program."));

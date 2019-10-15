@@ -1,9 +1,11 @@
 package ru.job4j.tracker;
 
+import java.util.function.Consumer;
+
 public class EditAction extends BaseAction {
 
-    public EditAction(int key, String name) {
-        super(key, name);
+    public EditAction(int key, String name, Consumer<String> output) {
+        super(key, name, output);
     }
 
     @Override
