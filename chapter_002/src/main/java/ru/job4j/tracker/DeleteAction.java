@@ -10,9 +10,9 @@ public class DeleteAction extends BaseAction {
     public boolean execute(Tracker tracker, Input input) {
         String id = input.askStr("Enter ID item which be delete: ");
         if (tracker.delete(id)) {
-            System.out.println("Item delete.");
+            output.accept("Item delete.");
         } else {
-            System.out.println("Item not delete");
+            output.accept("Item not delete");
         }
         return true;
     }

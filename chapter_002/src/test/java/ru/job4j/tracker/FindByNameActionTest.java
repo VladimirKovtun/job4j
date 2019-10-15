@@ -33,7 +33,7 @@ public class FindByNameActionTest {
         tracker.add(new Item("Second"));
         tracker.add(new Item("Second"));
         List<String> answers = Arrays.asList("Second");
-        new FindByNameAction(0, "Find items by name.").execute(tracker, new StubInput(answers));
+        new FindByNameAction(0, "Find items by name.", System.out::print).execute(tracker, new StubInput(answers));
         Assert.assertThat(new String(out.toByteArray()), Is.is(tracker.findByName("Second").toString()));
     }
 }

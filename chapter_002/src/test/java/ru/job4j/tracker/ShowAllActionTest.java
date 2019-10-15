@@ -30,7 +30,7 @@ public class ShowAllActionTest {
         Tracker tracker = new Tracker();
         tracker.add(new Item("First"));
         tracker.add(new Item("Second"));
-        new ShowAllAction(0, "Show all items.").execute(tracker, new StubInput(new ArrayList<>()));
+        new ShowAllAction(0, "Show all items.", System.out::print).execute(tracker, new StubInput(new ArrayList<>()));
         Assert.assertThat(new String(out.toByteArray()), Is.is(tracker.findAll().toString()));
     }
 }

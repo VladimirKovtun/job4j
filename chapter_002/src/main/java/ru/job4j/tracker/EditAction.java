@@ -12,9 +12,9 @@ public class EditAction extends BaseAction {
         String id = input.askStr("Enter ID item: ");
         Item item = new Item(name);
         if (tracker.replace(id, item)) {
-            System.out.println("Item replace.");
+            output.accept("Item replace.");
         } else {
-            System.out.println("Item not replace.");
+            output.accept("Item not replace.");
         }
         return true;
     }
