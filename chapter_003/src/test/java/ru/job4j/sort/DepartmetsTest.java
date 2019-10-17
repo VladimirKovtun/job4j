@@ -70,7 +70,7 @@ public class DepartmetsTest {
                 new Departments.Org("K2\\SK1\\SSK1"),
                 new Departments.Org("K2\\SK1\\SSK2"));
         List<Departments.Org> convert = convert(dep);
-        Collections.sort(convert, new Departments.OrgDescComprator());
+        Collections.sort(convert, new Departments.OrgDescComparator());
         assertThat(convert, Is.is(Arrays.asList(
                 new Departments.Org("K2"),
                 new Departments.Org("K2\\SK1"),

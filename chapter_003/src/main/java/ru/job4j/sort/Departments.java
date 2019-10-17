@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Departments {
 
-    final static class OrgDescComprator implements Comparator<Departments.Org> {
+    final static class OrgDescComparator implements Comparator<Departments.Org> {
 
         @Override
         public int compare(Org o1, Org o2) {
