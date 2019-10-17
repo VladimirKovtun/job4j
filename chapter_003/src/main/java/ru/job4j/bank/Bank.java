@@ -60,11 +60,11 @@ public class Bank {
     }
 
     public List<Account> getUserAccounts(String passport) {
-        return dataBase.entrySet()
+        return dataBase.keySet()
                 .stream()
-                .filter(entry -> entry.getKey().getPassport().equals(passport))
-                .map(Map.Entry::getValue)
+                .filter(key -> key.getPassport().equals(passport))
                 .findFirst()
+                .map(dataBase::get)
                 .orElse(null);
 
         /*List<Account> list = new ArrayList<>();
