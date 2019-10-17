@@ -9,14 +9,14 @@ public class SortUserTest {
 
     @Test
     public void whenSortByAge() {
-        Set<User> result = new SortUser().sort(Arrays.asList(
+        Set<User> result = new SortUser().sort(List.of(
                 new User("Vadim", 15),
                 new User("Almaz", 23),
                 new User("Xandr", 12),
                 new User("Alex", 33),
                 new User("Ivan", 25)
         ));
-        assertThat(result.toString(), Is.is(Arrays.asList(
+        assertThat(result.toString(), Is.is(List.of(
                 new User("Xandr", 12),
                 new User("Vadim", 15),
                 new User("Almaz", 23),
