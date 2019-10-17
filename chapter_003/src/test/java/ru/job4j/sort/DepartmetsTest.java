@@ -4,6 +4,7 @@ import org.hamcrest.core.Is;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -45,7 +46,7 @@ public class DepartmetsTest {
                 new Departments.Org("K2\\SK1\\SSK1"),
                 new Departments.Org("K2\\SK1\\SSK2"));
         List<Departments.Org> convert = convert(dep);
-        new Departments().sort(convert);
+        Collections.sort(convert);
         assertThat(convert, Is.is(Arrays.asList(
                 new Departments.Org("K1"),
                 new Departments.Org("K1\\SK1"),
@@ -69,7 +70,7 @@ public class DepartmetsTest {
                 new Departments.Org("K2\\SK1\\SSK1"),
                 new Departments.Org("K2\\SK1\\SSK2"));
         List<Departments.Org> convert = convert(dep);
-        new Departments().sortDesc(convert);
+        Collections.sort(convert, new Departments.OrgDescComprator());
         assertThat(convert, Is.is(Arrays.asList(
                 new Departments.Org("K2"),
                 new Departments.Org("K2\\SK1"),

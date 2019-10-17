@@ -5,30 +5,25 @@ import java.util.*;
 
 public class Departments {
 
-    public void sort(List<Org> dep) {
-        Collections.sort(dep);
-    }
+    final static class OrgDescComprator implements Comparator<Departments.Org> {
 
-    public void sortDesc(List<Org> dep) {
-        Collections.sort(dep, new Comparator<Departments.Org>() {
-            @Override
-            public int compare(Org o1, Org o2) {
-                int result = 0;
-                int length = o1.names.length < o2.names.length ? o1.names.length : o2.names.length;
-                int count = 0;
-                while (count != length) {
-                    if (CharSequence.compare(o2.names[count], o1.names[count]) != 0) {
-                        result = CharSequence.compare(o2.names[count], o1.names[count]);
-                        break;
-                    }
-                    count++;
+        @Override
+        public int compare(Org o1, Org o2) {
+            int result = 0;
+            int length = o1.names.length < o2.names.length ? o1.names.length : o2.names.length;
+            int count = 0;
+            while (count != length) {
+                if (CharSequence.compare(o2.names[count], o1.names[count]) != 0) {
+                    result = CharSequence.compare(o2.names[count], o1.names[count]);
+                    break;
                 }
-                if ((result == 0 && o1.names.length != o2.names.length)) {
-                    result = o1.names.length > o2.names.length ? 1 : -1;
-                }
-                return result;
+                count++;
             }
-        });
+            if ((result == 0 && o1.names.length != o2.names.length)) {
+                result = o1.names.length > o2.names.length ? 1 : -1;
+            }
+            return result;
+        }
     }
 
     final static class Org implements Comparable<Org> {
