@@ -9,12 +9,12 @@ public class PriorityQueueTest {
 
     @Test
     public void whenTakePriorityTask() {
-        PriorityQueue queue = new PriorityQueue();
+        var queue = new PriorityQueue();
         queue.put(new Task("Drink Tea", 3));
         queue.put(new Task("Watch TV", 3));
         queue.put(new Task("Write code", 1));
         queue.put(new Task("Sleep", 5));
-        Task task = queue.take();
+        var task = queue.take();
         assertThat(task.getDesc(), Is.is("Write code"));
     }
 
