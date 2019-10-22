@@ -18,6 +18,16 @@ public class UserMail {
                         userCopy.remove(i--);
                     }
                 }
+                for (int i = 0; i < userCopy.size(); i++) {
+                    if (!Collections.disjoint(user.geteMail(), userCopy.get(i).geteMail())) {
+                        user.geteMail().addAll(userCopy.get(i).geteMail());
+                        if (userCopy.size() == 1) {
+                            userCopy.remove(i);
+                        } else {
+                            userCopy.remove(i--);
+                        }
+                    }
+                }
                 result.add(user);
             }
         }
