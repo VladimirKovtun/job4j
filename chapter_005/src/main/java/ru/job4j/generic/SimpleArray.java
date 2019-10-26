@@ -1,5 +1,6 @@
 package ru.job4j.generic;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -32,6 +33,16 @@ public class SimpleArray<T> {
 
     public T get(int position) {
         return (T) array[position];
+    }
+
+    public int getPosition(T model) {
+        int position = 0;
+        for (int i = 0; i < index; i++) {
+            if (array[i].equals(model)) {
+                position = i;
+            }
+        }
+        return position;
     }
 
     public Iterator<T> iterator() {
