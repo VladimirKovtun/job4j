@@ -28,14 +28,8 @@ public class EvenIterator implements Iterable {
 
         @Override
         public Object next() {
-            while (true) {
-                if (cursor > numbers.length - 1) {
-                    throw new NoSuchElementException();
-                }
-                if (numbers[cursor] % 2 == 0) {
-                    break;
-                }
-                cursor++;
+            if (!hasNext()) {
+                throw new NoSuchElementException();
             }
             return numbers[cursor++];
         }
