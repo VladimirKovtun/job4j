@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -23,6 +24,15 @@ public class MatrixIteratorTest {
         assertThat(it.next(), is(3));
         assertThat(it.next(), is(4));
         assertThat(it.next(), is(7));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testsThatNextMethodInvokeException () {
+        assertThat(it.next(), is(1));
+        assertThat(it.next(), is(3));
+        assertThat(it.next(), is(4));
+        assertThat(it.next(), is(7));
+        it.next();
     }
 
     @Test
