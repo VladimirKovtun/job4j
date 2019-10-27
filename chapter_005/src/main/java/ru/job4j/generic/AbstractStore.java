@@ -17,12 +17,14 @@ public abstract class AbstractStore <T extends Base> implements Store<T> {
     @Override
     public boolean replace(String id, T model) {
         boolean rst = false;
+        int count = 0;
         for (Iterator<T> it = array.iterator(); it.hasNext(); ) {
             T el = it.next();
             if (el.getId().equals(id)) {
-                array.set(array.getPosition(el), model);
+                array.set(count, model);
                 rst = true;
             }
+            count++;
         }
         return rst;
     }
@@ -30,12 +32,14 @@ public abstract class AbstractStore <T extends Base> implements Store<T> {
     @Override
     public boolean delete(String id) {
         boolean rst = false;
+        int count = 0;
         for (Iterator<T> it = array.iterator(); it.hasNext(); ) {
             T el = it.next();
             if (el.getId().equals(id)) {
-                array.remove(array.getPosition(el));
+                array.remove(count);
                 rst = true;
             }
+            count++;
         }
         return rst;
     }
@@ -43,11 +47,13 @@ public abstract class AbstractStore <T extends Base> implements Store<T> {
     @Override
     public T findById(String id) {
         T elem = null;
+        int count = 0;
         for (Iterator<T> it = array.iterator(); it.hasNext(); ) {
             T el = it.next();
             if (el.getId().equals(id)) {
-                elem = array.get(array.getPosition(el));
+                elem = array.get(count);
             }
+            count++;
         }
         return elem;
     }

@@ -17,15 +17,6 @@ public class SimpleArrayTest {
         assertThat(arrayString.get(0), is("Hello"));
     }
 
-    @Test
-    public void whenFindPosition() {
-        SimpleArray<String> arrayString = new SimpleArray<>(3);
-        arrayString.add("Hello");
-        arrayString.add("Hi");
-        arrayString.add("Good Morning");
-        assertThat(arrayString.getPosition("Hi"), is(1));
-    }
-
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void invocationOfAddElementShouldThrowArrayIndexOutOfBoundsException() {
         SimpleArray<String> arrayString = new SimpleArray<>(1);

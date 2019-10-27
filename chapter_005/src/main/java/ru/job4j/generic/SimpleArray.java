@@ -35,16 +35,6 @@ public class SimpleArray<T> {
         return (T) array[position];
     }
 
-    public int getPosition(T model) {
-        int position = 0;
-        for (int i = 0; i < index; i++) {
-            if (array[i].equals(model)) {
-                position = i;
-            }
-        }
-        return position;
-    }
-
     public Iterator<T> iterator() {
         return new SimpleArrayIteratorImpl();
     }
