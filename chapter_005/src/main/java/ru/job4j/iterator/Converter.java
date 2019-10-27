@@ -11,12 +11,19 @@ public class Converter {
 
             @Override
             public boolean hasNext() {
+                while (true) {
+                    if (it.hasNext() && !inner.hasNext()) {
+                        inner = it.next();
+                        continue;
+                    }
+                    break;
+                }
                 return inner != null && inner.hasNext();
             }
 
             @Override
             public Integer next() {
-                if (inner == null) {
+                if (!hasNext() || inner == null) {
                     throw new NoSuchElementException();
                 }
                 Integer in = inner.next();

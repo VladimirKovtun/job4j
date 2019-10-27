@@ -97,6 +97,19 @@ public class ConverterTest {
     }
 
     @Test
+    public void hasNextShould(){
+        Iterator<Integer> it1 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> it2 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> it3 = (Arrays.asList(1)).iterator();
+        Iterator<Iterator<Integer>> its = Arrays.asList(it1, it2, it3).iterator();
+        Converter IteratorOfIterators = new Converter();
+        it = IteratorOfIterators.convert(its);
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(1));
+    }
+
+
+    @Test
     public void hasNextShouldReturnFalseInCaseOfEmptyIterators(){
         Iterator<Integer> it1 = (new ArrayList<Integer>()).iterator();
         Iterator<Integer> it2 = (new ArrayList<Integer>()).iterator();
