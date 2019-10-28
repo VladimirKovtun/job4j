@@ -3,8 +3,7 @@ package ru.job4j.list;
 public class SimpleArrayList<E> {
     private int size;
     private Node<E> first;
-//1 2
-    //1.next = first
+
     public void add(E data) {
         Node<E> newLink = new Node<>(data);
         newLink.next = first;
