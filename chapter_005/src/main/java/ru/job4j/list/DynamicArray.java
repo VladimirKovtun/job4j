@@ -15,7 +15,7 @@ public class DynamicArray<E> implements Iterable<E> {
         container = new Object[size];
     }
 
-    void add(E value) {
+    public void add(E value) {
         if (check()) {
             extendContainer();
         }
@@ -23,7 +23,7 @@ public class DynamicArray<E> implements Iterable<E> {
         modCount++;
     }
 
-    E get(int index) {
+    public E get(int index) {
         return (E) container[index];
     }
 
