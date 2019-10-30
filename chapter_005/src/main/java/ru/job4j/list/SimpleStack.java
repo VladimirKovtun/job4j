@@ -1,39 +1,32 @@
 package ru.job4j.list;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SimpleStack<E> {
+public class SimpleStack<E> implements Iterable<E> {
+    private SimpleArrayList<E> arrayList;
 
-    private int size;
-    private Node<E> first;
+    public SimpleStack() {
+        arrayList = new SimpleArrayList<>();
+    }
 
     public void push(E data) {
-        Node<E> newLink = new Node<>(data);
-        newLink.next = first;
-        first = newLink;
-        size++;
+        arrayList.add(data);
     }
 
     public E poll() {
-        if (first == null) {
+        if (arrayList.getFirst() == null) {
             throw new NoSuchElementException();
         }
-        E data = first.data;
-        first = first.next;
-        size--;
-        return data;
+        return arrayList.delete();
     }
 
     public int getSize() {
-        return size;
+        return arrayList.getSize();
     }
 
-    private static class Node<E> {
-        E data;
-        Node<E> next;
-
-        Node(E data) {
-            this.data = data;
-        }
+    @Override
+    public Iterator<E> iterator() {
+        return arrayList.iterator();
     }
 }

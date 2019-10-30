@@ -33,6 +33,10 @@ public class SimpleArrayList<E> implements Iterable<E> {
         return result.data;
     }
 
+    public Node<E> getFirst() {
+        return first;
+    }
+
     public int getSize() {
         return size;
     }
