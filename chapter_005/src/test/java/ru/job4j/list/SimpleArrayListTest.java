@@ -3,6 +3,9 @@ package ru.job4j.list;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -46,5 +49,29 @@ public class SimpleArrayListTest {
     @Test
     public void whenAddThreeElementsThenUseGetSizeResultThree() {
         assertThat(list.getSize(), is(3));
+    }
+
+    @Test
+    public void whenHasNextReturnFalse() {
+        Iterator<Integer> itr = list.iterator();
+        assertThat(itr.next(), is(3));
+        assertThat(itr.hasNext(), is(true));
+    }
+
+    @Test
+    public void whenNextReturnExpectedResult() {
+        Iterator<Integer> itr = list.iterator();
+        assertThat(itr.next(), is(3));
+        assertThat(itr.next(), is(2));
+        assertThat(itr.next(), is(1));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenEmptyContainerAndNextInvokeNoSuchException() {
+        Iterator<Integer> itr = list.iterator();
+        itr.next();
+        itr.next();
+        itr.next();
+        itr.next();
     }
 }
