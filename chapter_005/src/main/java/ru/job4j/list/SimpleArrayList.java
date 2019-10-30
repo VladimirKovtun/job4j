@@ -61,7 +61,7 @@ public class SimpleArrayList<E> implements Iterable<E> {
 
         @Override
         public boolean hasNext() {
-            return current != null && current.next != null;
+            return current != null;
         }
 
         @Override
