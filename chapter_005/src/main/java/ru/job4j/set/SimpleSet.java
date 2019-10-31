@@ -7,12 +7,11 @@ import java.util.Iterator;
 
 public class SimpleSet<E> implements Iterable<E> {
     private final DynamicArray<E> array = new DynamicArray<>();
-    private int size;
 
     public boolean add(E value) {
         boolean rst = true;
         for (E data : array) {
-            if (data.hashCode() == value.hashCode() && data.equals(value)) {
+            if (data.equals(value)) {
                 rst = false;
             }
         }
