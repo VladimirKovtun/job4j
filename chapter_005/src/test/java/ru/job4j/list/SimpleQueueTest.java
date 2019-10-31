@@ -1,10 +1,8 @@
 package ru.job4j.list;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.NoSuchElementException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -29,7 +27,6 @@ public class SimpleQueueTest {
         assertThat(queue.poll(), is(4));
     }
 
-    @Ignore
     @Test
     public void whenPushedAndPolledOneAfterAnother() {
         queue.push(1);
@@ -42,14 +39,14 @@ public class SimpleQueueTest {
         assertThat(queue.poll(), is(4));
     }
 
-    @Ignore
-    @Test(expected = NoSuchElementException.class)
-    public void whenAfterPushAndPollQueueIsEmptyThenInvokedException() {
+    @Test()
+    public void whenAfterPushAndPollQueue() {
         queue.push(1);
         queue.push(2);
-        queue.poll();
-        queue.poll();
-        queue.poll();
+        assertThat(queue.poll(), is(1));
+        assertThat(queue.poll(), is(2));
+        queue.push(4);
+        assertThat(queue.poll(), is(4));
     }
 
 }
