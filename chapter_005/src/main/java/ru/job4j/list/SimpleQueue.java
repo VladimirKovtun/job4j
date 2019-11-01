@@ -1,14 +1,9 @@
 package ru.job4j.list;
 
 public class SimpleQueue<E> {
-    private SimpleStack<E> first;
-    private SimpleStack<E> second;
+    private SimpleStack<E> first = new SimpleStack<>();
+    private SimpleStack<E> second = new SimpleStack<>();
     private int size;
-
-    public SimpleQueue() {
-        first = new SimpleStack<>();
-        second = new SimpleStack<>();
-    }
 
     public void push(E data) {
         first.push(data);

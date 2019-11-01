@@ -9,14 +9,20 @@ public class SimpleSet<E> implements Iterable<E> {
     private final DynamicArray<E> array = new DynamicArray<>();
 
     public boolean add(E value) {
-        boolean rst = true;
+        boolean rst = false;
+        if (!contains(value)) {
+            array.add(value);
+            rst = true;
+        }
+        return rst;
+    }
+
+    private boolean contains(E value) {
+        boolean rst = false;
         for (E data : array) {
             if (data.equals(value)) {
-                rst = false;
+                rst = true;
             }
-        }
-        if (rst) {
-            array.add(value);
         }
         return rst;
     }
