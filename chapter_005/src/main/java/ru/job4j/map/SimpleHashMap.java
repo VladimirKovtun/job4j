@@ -30,25 +30,24 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         int index = indexTable(key);
         if (tableMap[index] == null) {
             tableMap[index] = new Node<>(key, value, null, key.hashCode());
+            size++;
         } else {
             currentNode = tableMap[index];
             while (currentNode != null) {
                 if (currentNode.hash == key.hashCode()
                         && (currentNode.key == key || (currentNode.key.equals(key)))) {
-                    rst = false;
+                    currentNode.value = value;
                     break;
                 }
                 if (currentNode.next == null) {
                     currentNode.next = new Node<>(key, value, null, key.hashCode());
+                    size++;
                     break;
                 }
                 currentNode = currentNode.next;
             }
         }
-        if (rst) {
-            ++size;
-            ++modCount;
-        }
+        modCount++;
         return rst;
     }
 

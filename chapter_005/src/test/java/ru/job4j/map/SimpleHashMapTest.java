@@ -24,10 +24,11 @@ public class SimpleHashMapTest {
     public void whenAddOneAnd3DuplicateThenSizeOne() {
         map = new SimpleHashMap<>();
         map.insert("one", "1");
-        map.insert("one", "1");
-        map.insert("one", "1");
-        map.insert("one", "1");
+        map.insert("one", "2");
+        map.insert("one", "3");
+        map.insert("one", "4");
         assertThat(map.size(), is(1));
+        assertThat(map.get("one"), is("4"));
     }
 
     @Test
