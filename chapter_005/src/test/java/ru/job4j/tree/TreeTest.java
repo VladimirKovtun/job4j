@@ -9,6 +9,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class TreeTest {
+
     @Test
     public void when6ElFindLastThen6() {
         Tree<Integer> tree = new Tree<>(new Tree.Node<>(1));
@@ -50,5 +51,32 @@ public class TreeTest {
         assertThat(itr.next(), is(6));
         assertThat(itr.hasNext(), is(false));
         itr.next();
+    }
+
+    @Test
+    public void when3ChildrenThenTreeNotBinary() {
+        Tree<Integer> tree = new Tree<>(new Tree.Node<>(1));
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        assertThat(
+                tree.isBinary(),
+                is(false)
+        );
+    }
+
+    @Test
+    public void when2ChildrenThenTreeIsBinary() {
+        Tree<Integer> tree = new Tree<>(new Tree.Node<>(1));
+        tree.add(1, 2);
+        tree.add(1, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        assertThat(
+                tree.isBinary(),
+                is(true)
+        );
     }
 }

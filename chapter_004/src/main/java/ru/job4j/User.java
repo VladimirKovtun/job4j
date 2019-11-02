@@ -7,7 +7,9 @@ public class User {
     private String name;
     private Set<String> eMail;
 
-    public User() {}
+    public User() {
+
+    }
 
     public User(String name, Set<String> eMail) {
         this.name = name;
