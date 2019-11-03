@@ -2,7 +2,7 @@ package ru.job4j.generic;
 
 import java.util.Iterator;
 
-public abstract class AbstractStore <T extends Base> implements Store<T> {
+public abstract class AbstractStore<T extends Base> implements Store<T> {
     private final SimpleArray<T> array;
 
     public AbstractStore(SimpleArray<T> array) {
@@ -18,7 +18,7 @@ public abstract class AbstractStore <T extends Base> implements Store<T> {
     public boolean replace(String id, T model) {
         boolean rst = false;
         int count = 0;
-        for (Iterator<T> it = array.iterator(); it.hasNext(); ) {
+        for (Iterator<T> it = array.iterator(); it.hasNext();) {
             T el = it.next();
             if (el.getId().equals(id)) {
                 array.set(count, model);
@@ -33,7 +33,7 @@ public abstract class AbstractStore <T extends Base> implements Store<T> {
     public boolean delete(String id) {
         boolean rst = false;
         int count = 0;
-        for (Iterator<T> it = array.iterator(); it.hasNext(); ) {
+        for (Iterator<T> it = array.iterator(); it.hasNext();) {
             T el = it.next();
             if (el.getId().equals(id)) {
                 array.remove(count);
@@ -48,7 +48,7 @@ public abstract class AbstractStore <T extends Base> implements Store<T> {
     public T findById(String id) {
         T elem = null;
         int count = 0;
-        for (Iterator<T> it = array.iterator(); it.hasNext(); ) {
+        for (Iterator<T> it = array.iterator(); it.hasNext();) {
             T el = it.next();
             if (el.getId().equals(id)) {
                 elem = array.get(count);

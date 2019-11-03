@@ -8,5 +8,5 @@ public interface SimpleTree<E extends Comparable<E>> extends Iterable<E> {
 
     boolean add(E parent, E children);
 
-    Optional<Tree.Node<E>> findBy(E value);
+    Optional<Node<E>> findBy(E value);
 }

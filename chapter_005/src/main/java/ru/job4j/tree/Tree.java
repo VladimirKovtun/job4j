@@ -3,7 +3,7 @@ package ru.job4j.tree;
 import java.util.*;
 
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
-    private final Node<E> root;
+    private Node<E> root;
     private int size;
     private int modCount;
 
@@ -14,9 +14,17 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     @Override
     public boolean add(E parent, E children) {
         boolean rst = false;
-        if (findBy(parent).isPresent() && findBy(children).isEmpty()) {
-            findBy(parent).get().leaves().add(new Node<>(children));
+        Node<E> parentNode = findBy(parent).orElse(null);
+        if (parentNode != null && findBy(children).isEmpty()) {
+            parentNode.add(new Node<>(children));
             rst = true;
+        } else if (findBy(children).isEmpty()) {
+            Node<E> newRoot = new Node<>(children);
+            newRoot.add(root);
+            root = newRoot;
+            rst = true;
+        }
+        if (rst) {
             size++;
             modCount++;
         }
@@ -85,35 +93,14 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            E value = current.value;
-            if (!current.leaves().isEmpty()){
+            E value = current.getValue();
+            if (!current.leaves().isEmpty()) {
                 for (Node<E> child : current.leaves()) {
                     data.offer(child);
                 }
             }
             current = data.isEmpty() ? null : data.poll();
             return value;
-        }
-    }
-
-    public static class Node<E extends Comparable<E>> {
-        private final List<Node<E>> children = new ArrayList<>();
-        private final E value;
-
-        public Node(E value) {
-            this.value = value;
-        }
-
-        public void add(Node<E> child) {
-            children.add(child);
-        }
-
-        public List<Node<E>> leaves() {
-            return children;
-        }
-
-        public boolean eqValue(E that) {
-            return value.compareTo(that) == 0;
         }
     }
 }

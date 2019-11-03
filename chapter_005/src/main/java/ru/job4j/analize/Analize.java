@@ -9,8 +9,8 @@ public class Analize {
         Info info = new Info();
         for (User userPrev : previous) {
             for (User userCurr : current) {
-                if (userPrev.getId() == userCurr.getId() &&
-                    !userPrev.getName().equals(userCurr.getName())) {
+                if (userPrev.getId() == userCurr.getId()
+                    && !userPrev.getName().equals(userCurr.getName())) {
                     changed++;
                     break;
                 }

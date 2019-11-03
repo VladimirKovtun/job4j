@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SimpleStack<E> implements Iterable<E> {
-    private SimpleArrayList<E> arrayList= new SimpleArrayList<>();;
+    private SimpleArrayList<E> arrayList = new SimpleArrayList<>();
 
     public void push(E data) {
         arrayList.add(data);

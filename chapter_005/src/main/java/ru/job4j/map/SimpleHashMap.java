@@ -53,12 +53,12 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
 
     public V get(K key) {
         V value = null;
-        Node<K, V> current;
         int index = indexTable(key);
-        if ((current = tableMap[index]) != null) {
+        Node<K, V> current = tableMap[index];
+        if (current != null) {
             while (current != null) {
                 if (current.hash == key.hashCode()
-                    && (current.key == key || (current.key.equals(key)))) {
+                        && (current.key == key || (current.key.equals(key)))) {
                     value = current.value;
                     break;
                 }
@@ -70,13 +70,14 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
 
     public boolean remove(K key) {
         int index = indexTable(key);
-        Node<K, V> node = null, nextNode;
         Node<K, V> currentNode = tableMap[index];
+        Node<K, V> node = null, nextNode;
         if (currentNode != null) {
             if (currentNode.hash == key.hashCode() && (currentNode.key == key
                     || (key.equals(currentNode.key)))) {
                 node = currentNode;
-            } else if ((nextNode = currentNode.next) != null) {
+            } else if (currentNode.next != null) {
+                nextNode = currentNode.next;
                 do {
                     if (nextNode.hash == key.hashCode()
                             && ((nextNode.key == key
@@ -85,13 +86,15 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
                         break;
                     }
                     currentNode = nextNode;
-                } while ((nextNode = nextNode.next) != null);
+                    nextNode = nextNode.next;
+                } while (nextNode != null);
             }
             if (node != null) {
                 if (node == currentNode) {
                     tableMap[index] = node.next;
-                } else
+                } else {
                     currentNode.next = node.next;
+                }
                 ++modCount;
                 --size;
             }
@@ -181,7 +184,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
             } else {
                 while ((cursor < (capacity - 1))) {
                     current = tableMap[++cursor];
-                    if (current != null){
+                    if (current != null) {
                         break;
                     }
                 }

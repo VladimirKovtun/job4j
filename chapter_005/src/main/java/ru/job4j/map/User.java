@@ -19,7 +19,7 @@ public class User {
         return this == obj
                 || obj != null
                 && getClass() == obj.getClass()
-                && Objects.equals(name, ((User)obj).name)
+                && Objects.equals(name, ((User) obj).name)
                 && children == ((User) obj).children
                 && Objects.equals(birthday, ((User) obj).birthday);
     }
