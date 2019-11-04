@@ -122,7 +122,7 @@ public class ConverterTest {
 
     @Test(expected = NoSuchElementException.class)
     public void invocationOfNextMethodShouldThrowNoSuchElementException() {
-        Iterator<Integer> it1 = Arrays.asList(1,2,3).iterator();
+        Iterator<Integer> it1 = Arrays.asList(1, 2, 3).iterator();
         Iterator<Iterator<Integer>> its = Arrays.asList(it1).iterator();
         Converter iteratorOfIterators = new Converter();
         it = iteratorOfIterators.convert(its);
