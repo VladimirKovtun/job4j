@@ -15,10 +15,11 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     public boolean add(E parent, E children) {
         boolean rst = false;
         Node<E> parentNode = findBy(parent).orElse(null);
-        if (parentNode != null && findBy(children).isEmpty()) {
+        boolean childNotExist = findBy(children).isEmpty();
+        if (parentNode != null && childNotExist) {
             parentNode.add(new Node<>(children));
             rst = true;
-        } else if (findBy(children).isEmpty()) {
+        } else if (childNotExist) {
             Node<E> newRoot = new Node<>(children);
             newRoot.add(root);
             root = newRoot;
