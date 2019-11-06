@@ -19,15 +19,15 @@ public class Config {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String[] read;
             while (reader.ready()) {
-                read = reader.readLine().split("=");
-                if (!read[0].trim().isEmpty()) {
+                String str = reader.readLine();
+                read = str.split("=");
+                if (!str.startsWith("//") && !read[0].trim().isEmpty()) {
                     values.put(read[0], read[1]);
                 }
             }
         } catch (IOException exc) {
             exc.printStackTrace();
         }
-
     }
 
     public String value(String key) {
