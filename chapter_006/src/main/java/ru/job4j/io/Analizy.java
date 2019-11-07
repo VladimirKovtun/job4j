@@ -6,10 +6,10 @@ import java.io.*;
 public class Analizy {
 
     public void unAvailable(String source, String target) {
-        try(BufferedReader reader = new BufferedReader(new FileReader(source));
+        try (BufferedReader reader = new BufferedReader(new FileReader(source));
             BufferedWriter writer = new BufferedWriter(new FileWriter(target))) {
             String line;
-            String [] str;
+            String[] str;
             StringBuilder resultString;
             while (reader.ready()) {
                 line = reader.readLine();
@@ -34,7 +34,7 @@ public class Analizy {
                     }
                 }
             }
-        }catch (IOException exc) {
+        } catch (IOException exc) {
             exc.printStackTrace();
         }
     }
