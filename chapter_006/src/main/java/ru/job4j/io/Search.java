@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Search {
 
-    List<File> files(String parent, List<String> exts) {
+    List<File> allFiles(String parent) {
         File rootDir = new File(parent);
         List<File> files = new ArrayList<>();
         Queue<File> fileTree = new LinkedList<>();
@@ -15,14 +15,21 @@ public class Search {
             if (file.isDirectory()) {
                 Collections.addAll(fileTree, file.listFiles());
             } else if (file.isFile()) {
-                String fileName = file.getName();
-                for (String ext : exts) {
-                    if (fileName.endsWith(ext)) {
-                        files.add(file);
-                    }
-                }
+                files.add(file);
             }
         }
         return files;
+    }
+
+    List<File> files(String parent, List<String> exts) {
+        List<File> extFile = new ArrayList<>();
+        for (String ext : exts) {
+            for (File file : allFiles(parent)) {
+                if (file.getName().endsWith(ext)) {
+                    extFile.add(file);
+                }
+            }
+        }
+        return extFile;
     }
 }

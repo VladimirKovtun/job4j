@@ -81,7 +81,7 @@ public class SearchTest {
         List<File> files = new Search().files(root, new ArrayList<>(Arrays.asList(".doc", ".jpg")));
         Iterator<File> iterator = files.iterator();
         assertThat(iterator.next().getName(), is("docFile1.doc"));
-        assertThat(iterator.next().getName(), is("picFile1.jpg"));
         assertThat(iterator.next().getName(), is("docFile2.doc"));
+        assertThat(iterator.next().getName(), is("picFile1.jpg"));
     }
 }
