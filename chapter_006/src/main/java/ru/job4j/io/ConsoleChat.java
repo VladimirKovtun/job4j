@@ -23,11 +23,11 @@ public class ConsoleChat {
             StringBuilder logText;
             String resStr = "";
             boolean botIsReady = true;
-            while (!(resStr.equals(OVER))) {
+            while (!(OVER.equals(resStr))) {
                 resStr = userRead.readLine();
                 logText = new StringBuilder("I: " + resStr + "\n");
-                botIsReady = !resStr.equals(STOP) && (resStr.equals(CONTINUE) || botIsReady);
-                if (resStr.equals(OVER) || resStr.equals(STOP) || resStr.equals(CONTINUE)) {
+                botIsReady = !STOP.equals(resStr) && (CONTINUE.equals(resStr) || botIsReady);
+                if (OVER.equals(resStr) || STOP.equals(resStr) || CONTINUE.equals(resStr)) {
                     logText = new StringBuilder("console command: " + resStr + "\n");
                 } else if (botIsReady) {
                     int index = new Random().nextInt(listPhrase.length);
