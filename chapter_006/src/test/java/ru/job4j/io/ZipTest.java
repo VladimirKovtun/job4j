@@ -57,6 +57,7 @@ public class ZipTest {
         Zip zip = new Zip(arg);
         List<File> files = zip.seekBy(fixProp, arg.exclude());
         zip.pack(files, new File(property + arg.output()));
+
         List<String> list = new LinkedList<>();
         ZipFile zipFile = new ZipFile(property + arg.output());
         Enumeration<? extends ZipEntry> entries = zipFile.entries();
@@ -65,6 +66,8 @@ public class ZipTest {
             list.add(zipArray[zipArray.length - 1]);
         }
         List<String> collect = files.stream().map(File::getName).collect(Collectors.toList());
+        File newFile = new File(property + arg.output());
+        assertThat(newFile.exists(), is(true));
         assertThat(collect.toString(), is(list.toString()));
     }
 
