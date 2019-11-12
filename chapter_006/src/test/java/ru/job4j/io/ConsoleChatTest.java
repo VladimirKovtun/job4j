@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class ConsoleChatTest {
     private final PrintStream stdOut = System.out;
     private final InputStream stdIn = System.in;
-    private final byte[] bytes = "привет\r\nзакончить".getBytes();
+    private final byte[] bytes = ("привет" + System.lineSeparator() + "закончить").getBytes();
     private final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -29,8 +29,8 @@ public class ConsoleChatTest {
     }
 
     @Test
-    public void when() {
+    public void whenBotSaysHi() {
         new ConsoleChat("./data/dialog.txt", "./data/phrase.txt").init();
-        assertThat(new String(out.toByteArray()), is("Bot: Привет!\r\n"));
+        assertThat(new String(out.toByteArray()), is("Bot: Привет!" + System.lineSeparator()));
     }
 }
