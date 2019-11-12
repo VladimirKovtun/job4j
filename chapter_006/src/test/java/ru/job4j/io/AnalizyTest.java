@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class AnalizyTest {
 
     @Test
-    public void when() {
+    public void whenFindTwoPeriod() {
         String source = "./data/server";
         String target = "./data/unavailable.csv";
         new Analizy().unAvailable(source, target);
