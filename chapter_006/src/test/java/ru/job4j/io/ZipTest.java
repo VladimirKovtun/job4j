@@ -1,37 +1,49 @@
 package ru.job4j.io;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class ZipTest {
+    private String root = System.getProperty("java.io.tmpdir") + "main";
 
     @Before
     public void prepareToTest() {
-        List<File> listFiles;
-        String root = System.getProperty("java.io.tmpdir") + "main";
         File parentDir = new File(root);
-        parentDir.mkdir();
+        if (parentDir.exists()) {
+            deleteFile(parentDir);
+        }
+        List<File> listFolder;
+        List<File> listFiles;
+        listFolder = new ArrayList<>();
         File subDir1 = new File(parentDir.getAbsolutePath() + "/sub1");
-        subDir1.mkdir();
         File subDir2 = new File(subDir1.getAbsolutePath() + "/sub2");
-        subDir2.mkdir();
         File subDir3 = new File(subDir2.getAbsolutePath() + "/sub3");
-        subDir3.mkdir();
         File subDir4 = new File(parentDir.getAbsolutePath() + "/sub4");
-        subDir4.mkdir();
+        listFolder.add(parentDir);
+        listFolder.add(subDir1);
+        listFolder.add(subDir2);
+        listFolder.add(subDir3);
+        listFolder.add(subDir4);
+        listFolder.forEach(file -> {
+            try {
+                if (!file.mkdir()) {
+                    throw new FileNotFoundException();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         listFiles = new ArrayList<>(Arrays.asList(new File(parentDir, "textFile1.txt"),
                 new File(parentDir, "docFile1.doc"),
                 new File(subDir1, "textFile2.txt"),
@@ -41,7 +53,9 @@ public class ZipTest {
                 new File(subDir4, "textFile4.txt")));
         listFiles.forEach(file -> {
             try {
-                file.createNewFile();
+                if (!file.createNewFile()) {
+                    throw new FileNotFoundException();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -69,6 +83,19 @@ public class ZipTest {
         File newFile = new File(property + arg.output());
         assertThat(newFile.exists(), is(true));
         assertThat(collect.toString(), is(list.toString()));
+    }
+
+    private void deleteFile(File path) {
+        if (path.isDirectory()) {
+            for (File file : path.listFiles()) {
+                if (file.isDirectory()) {
+                    deleteFile(file);
+                } else {
+                    file.delete();
+                }
+            }
+        }
+        path.delete();
     }
 
 }
