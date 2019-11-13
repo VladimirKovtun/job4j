@@ -15,7 +15,9 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class SearchTest {
-    private String root = System.getProperty("java.io.tmpdir") + "main";
+    private String root = System.getProperty("java.io.tmpdir") + "/main/";
+    private List<File> expect;
+    private List<File> expect1;
 
     @Before
     public void prepareToTest() {
@@ -46,7 +48,6 @@ public class SearchTest {
         });
         listFiles = new ArrayList<>(Arrays.asList(new File(parentDir, "textFile1.txt"),
                 new File(parentDir, "docFile1.doc"),
-                new File(subDir1, "textFile2.txt"),
                 new File(subDir2, "textFile3.txt"),
                 new File(subDir2, "picFile1.jpg"),
                 new File(subDir3, "docFile2.doc"),
@@ -60,25 +61,24 @@ public class SearchTest {
                 e.printStackTrace();
             }
         });
+        expect = new ArrayList<>(Arrays.asList(new File(parentDir, "textFile1.txt"),
+                new File(subDir4, "textFile4.txt"),
+                new File(subDir2, "textFile3.txt")));
+        expect1 = new ArrayList<>(Arrays.asList(new File(parentDir, "docFile1.doc"),
+                new File(subDir3, "docFile2.doc"),
+                new File(subDir2, "picFile1.jpg")));
     }
 
     @Test
     public void whenFindTxtFiles() {
         List<File> files = new Search().files(root, new ArrayList<>(Arrays.asList(".txt")));
-        Iterator<File> iterator = files.iterator();
-        assertThat(iterator.next().getName(), is("textFile1.txt"));
-        assertThat(iterator.next().getName(), is("textFile2.txt"));
-        assertThat(iterator.next().getName(), is("textFile4.txt"));
-        assertThat(iterator.next().getName(), is("textFile3.txt"));
+        assertThat(files.toString(), is(expect.toString()));
     }
 
     @Test
     public void whenFindDocAndJpgFiles() {
         List<File> files = new Search().files(root, new ArrayList<>(Arrays.asList(".doc", ".jpg")));
-        Iterator<File> iterator = files.iterator();
-        assertThat(iterator.next().getName(), is("docFile1.doc"));
-        assertThat(iterator.next().getName(), is("docFile2.doc"));
-        assertThat(iterator.next().getName(), is("picFile1.jpg"));
+        assertThat(files.toString(), is(expect1.toString()));
     }
 
     private void deleteFile(File path) {

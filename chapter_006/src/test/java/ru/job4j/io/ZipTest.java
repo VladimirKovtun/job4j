@@ -15,7 +15,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class ZipTest {
-    private String root = System.getProperty("java.io.tmpdir") + "main";
+    private String root = System.getProperty("java.io.tmpdir") + "/main/";
 
     @Before
     public void prepareToTest() {
@@ -65,22 +65,22 @@ public class ZipTest {
     @Test
     public void whenUnzip3Files() throws IOException {
         String property = System.getProperty("java.io.tmpdir");
-        String fixProp = property + "main";
+        String fixProp = property + "/main/";
         Arg arg = new Arg("java -jar pack.jar -d C:/Users/User/AppData/Local/Temp/main"
                 + " -e *.txt -o example.zip");
         Zip zip = new Zip(arg);
         List<File> files = zip.seekBy(fixProp, arg.exclude());
-        zip.pack(files, new File(property + arg.output()));
+        zip.pack(files, new File(fixProp +  arg.output()));
 
         List<String> list = new LinkedList<>();
-        ZipFile zipFile = new ZipFile(property + arg.output());
+        ZipFile zipFile = new ZipFile(fixProp + arg.output());
         Enumeration<? extends ZipEntry> entries = zipFile.entries();
         while (entries.hasMoreElements()) {
             String[] zipArray = entries.nextElement().getName().split("\\\\");
             list.add(zipArray[zipArray.length - 1]);
         }
         List<String> collect = files.stream().map(File::getName).collect(Collectors.toList());
-        File newFile = new File(property + arg.output());
+        File newFile = new File(fixProp + arg.output());
         assertThat(newFile.exists(), is(true));
         assertThat(collect.toString(), is(list.toString()));
     }
