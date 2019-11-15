@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Search {
 
-    List<File> allFiles(String parent) {
+    public List<File> allFiles(String parent) {
         File rootDir = new File(parent);
         List<File> files = new ArrayList<>();
         Queue<File> fileTree = new LinkedList<>();
@@ -21,7 +21,7 @@ public class Search {
         return files;
     }
 
-    List<File> files(String parent, List<String> exts) {
+    public List<File> files(String parent, List<String> exts) {
         List<File> extFile = new ArrayList<>();
         for (String ext : exts) {
             for (File file : allFiles(parent)) {
