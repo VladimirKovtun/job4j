@@ -1,6 +1,8 @@
 package ru.job4j;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Links {
 
@@ -22,10 +24,10 @@ public class Links {
             }
             tempListLinks.remove(str);
             for (String arr : tempListLinks) {
-                List<String> linkStr = Arrays.asList(str.split(";"));
+                /*List<String> linkStr = Arrays.asList(str.split(";"));
                 List<String> linkArr = Arrays.asList(arr.split(";"));
-                boolean notDisjoint = linkStr.stream().filter(x -> !x.isEmpty()).anyMatch(linkArr::contains);
-                if (notDisjoint) {
+                boolean notDisjoint = linkStr.stream().filter(x -> !x.isEmpty()).anyMatch(linkArr::contains);*/
+                if (!Collections.disjoint(parse(str), parse(arr)/*notDisjoint*/)) {
                     if (stringMapToGroup.get(arr) == null) {
                         stringMapToGroup.put(arr, name);
                         setLinks = groupMapToSet.get(name);
@@ -50,5 +52,20 @@ public class Links {
             }
         }
         return groupMapToSet;
+    }
+
+    private List<String> parse(String string) {
+        List<String> list = new ArrayList<>();
+        Pattern pattern = Pattern.compile("^([0-9]*);([0-9]*);([0-9]*)$");
+        Matcher m = pattern.matcher(string);
+        if (m.matches()) {
+            for (int i = 1; i < 4; i++) {
+                String elReg = m.group(i);
+                if (!elReg.isEmpty()) {
+                    list.add(elReg);
+                }
+            }
+        }
+        return list;
     }
 }
