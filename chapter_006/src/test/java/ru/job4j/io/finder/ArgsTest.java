@@ -27,38 +27,34 @@ public class ArgsTest {
     }
 
     @Test
-    public void when() {
-        Args args = new Args(new String[]{"-d", "C:/Users/User/AppData/Local/Temp/main"
-                                          , "-n", "example.zip", "-f", "-o", "log.txt"});
+    public void whenInputValidExpectTrue() {
+        Args args = new Args(new String[]{"-d", "C:/Users/User/AppData/Local/Temp/main", "-n", "example.zip", "-f", "-o", "log.txt"});
         assertThat(args.validateKey(), is(true));
     }
 
     @Test
-    public void when1() {
-        Args args = new Args(new String[]{"-d", "C:/Users/User/AppData/Local/Temp/main"
-                , "-n", "example.zip", "-f"});
+    public void whenForgetFilenameThenFalse() {
+        Args args = new Args(new String[]{"-d", "C:/Users/User/AppData/Local/Temp/main", "-n", "example.zip", "-f"});
         assertThat(args.validateKey(), is(false));
         assertThat(new String(baos.toByteArray()), is("Input fileName for save result search." + System.lineSeparator()));
     }
 
     @Test
-    public void when2() {
-        Args args = new Args(new String[]{"-d", "C:/Users/User/AppData/Local/Temp/main"
-                , "-n", "example.zip", "-o", "log.txt"});
+    public void whenForgetFlagThenFalse() {
+        Args args = new Args(new String[]{"-d", "C:/Users/User/AppData/Local/Temp/main", "-n", "example.zip", "-o", "log.txt"});
         assertThat(args.validateKey(), is(false));
         assertThat(new String(baos.toByteArray()), is("You forget type flag." + System.lineSeparator()));
     }
 
     @Test
-    public void when3() {
-        Args args = new Args(new String[]{"-d", "C:/Users/User/AppData/Local/Temp/main"
-                , "-f", "-o", "log.txt"});
+    public void whenForgetCriteriaThenFalse() {
+        Args args = new Args(new String[]{"-d", "C:/Users/User/AppData/Local/Temp/main", "-f", "-o", "log.txt"});
         assertThat(args.validateKey(), is(false));
         assertThat(new String(baos.toByteArray()), is("You forget type criteria for search." + System.lineSeparator()));
     }
 
     @Test
-    public void when4() {
+    public void whenForgetPathThenFalse() {
         Args args = new Args(new String[]{"-n", "example.zip", "-f", "-o", "log.txt"});
         assertThat(args.validateKey(), is(false));
         assertThat(new String(baos.toByteArray()), is("Input name directory and restart for start search." + System.lineSeparator()));

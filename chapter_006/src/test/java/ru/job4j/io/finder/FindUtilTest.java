@@ -67,8 +67,7 @@ public class FindUtilTest {
     @Test
     public void whenFindTxtFileWhithFlagF() {
         List<String> list = new ArrayList<>();
-        Args args = new Args(new String[]{"-d", root
-                , "-n", "textFile4.txt", "-f", "-o", "log.txt"});
+        Args args = new Args(new String[]{"-d", root, "-n", "textFile4.txt", "-f", "-o", "log.txt"});
         new FindUtil(args).util();
 
         try {
@@ -82,8 +81,7 @@ public class FindUtilTest {
     @Test
     public void whenFindTxtFileWhithFlagM() {
         List<String> list = new ArrayList<>();
-        Args args = new Args(new String[]{"-d", root
-                , "-n", "*.doc", "-m", "-o", "log.txt"});
+        Args args = new Args(new String[]{"-d", root, "-n", "*.doc", "-m", "-o", "log.txt"});
         new FindUtil(args).util();
 
         try {
