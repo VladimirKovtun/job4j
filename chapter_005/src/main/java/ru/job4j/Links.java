@@ -11,7 +11,9 @@ public class Links {
         Set<String> setLinks;
         Map<String, Set<String>> groupMapToSet = new HashMap<>();
         Map<String, String> stringMapToGroup = new LinkedHashMap<>();
-        link.forEach(k -> stringMapToGroup.put(k, null));
+        for (String key : link) {
+            stringMapToGroup.put(key, null);
+        }
         int index = 0;
         for (String str : link) {
             String name = stringMapToGroup.get(str);
@@ -24,22 +26,21 @@ public class Links {
             }
             tempListLinks.remove(str);
             for (String arr : tempListLinks) {
-                /*List<String> linkStr = Arrays.asList(str.split(";"));
-                List<String> linkArr = Arrays.asList(arr.split(";"));
-                boolean notDisjoint = linkStr.stream().filter(x -> !x.isEmpty()).anyMatch(linkArr::contains);*/
-                if (!Collections.disjoint(parse(str), parse(arr)/*notDisjoint*/)) {
+                if (!Collections.disjoint(parse(str), parse(arr))) {
                     if (stringMapToGroup.get(arr) == null) {
                         stringMapToGroup.put(arr, name);
                         setLinks = groupMapToSet.get(name);
                         setLinks.add(arr);
                         groupMapToSet.put(name, setLinks);
+                    } else if (stringMapToGroup.get(arr).equals(stringMapToGroup.get(str))) {
                     } else {
                         String oldName = name;
                         setLinks = groupMapToSet.get(oldName);
                         name = stringMapToGroup.get(arr);
                         if (setLinks.size() > 1) {
-                            String finalName = name;
-                            setLinks.forEach(l -> stringMapToGroup.put(l, finalName));
+                            for (String key : setLinks) {
+                                stringMapToGroup.put(key, name);
+                            }
                         } else {
                             stringMapToGroup.put(str, name);
                         }

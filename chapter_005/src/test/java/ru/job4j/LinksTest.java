@@ -22,6 +22,7 @@ public class LinksTest {
         Map<String, Set<String>> link = new Links().findLink(List.of("111;123;222"
                                                                     , "23;155;678"
                                                                     , "200;123;100"
+                                                                    , "500;123;60"
                                                                     , "300;;100"
                                                                     , "223;190;54"
                                                                     , "125;156;12"
