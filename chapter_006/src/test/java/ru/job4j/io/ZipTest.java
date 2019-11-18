@@ -76,10 +76,14 @@ public class ZipTest {
         ZipFile zipFile = new ZipFile(fixProp + arg.output());
         Enumeration<? extends ZipEntry> entries = zipFile.entries();
         while (entries.hasMoreElements()) {
-            String[] zipArray = entries.nextElement().getName().split("\\\\");
-            list.add(zipArray[zipArray.length - 1]);
+            String name = entries.nextElement().getName();
+            String sub = name.substring(name.lastIndexOf(File.separator) + 1);
+            list.add(sub);
         }
-        List<String> collect = files.stream().map(File::getName).collect(Collectors.toList());
+        List<String> collect = new ArrayList<>();
+        for (File file : files) {
+            collect.add(file.getName());
+        }
         File newFile = new File(fixProp + arg.output());
         assertThat(newFile.exists(), is(true));
         assertThat(collect.toString(), is(list.toString()));
