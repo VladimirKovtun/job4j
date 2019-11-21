@@ -5,6 +5,8 @@ import ru.job4j.io.Search;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class FindUtil {
@@ -18,12 +20,34 @@ public class FindUtil {
         List<File> resList;
         if (args.validateKey()) {
             List<File> files = new Search().allFiles(args.getFileNameDir());
-            resList = seekByCriteria(files, args.getFlag(), args.getCriteria());
+            resList = seekByPredicate(files, getPredicat());
+            //resList = seekByCriteria(files, args.getFlag(), args.getCriteria());
             write(resList, args.getFileNameSave(), args.getFileNameDir());
         }
     }
 
-    private List<File> seekByCriteria(List<File> list, String flag, String criteria) {
+    private BiPredicate<File, Args> getPredicat() {
+        if ("-f".equals(args.getFlag())) {
+            return (x, y) -> x.getName().equals(y.getCriteria());
+        } else if ("-m".equals(args.getFlag())) {
+            return (x, y) -> x.getName().endsWith(y.getCriteria().substring(1));
+        } else if ("-r".equals(args.getFlag())) {
+            return (x, y) -> Pattern.compile(y.getCriteria()).matcher(x.getName()).find();
+        }
+        return null;
+    }
+
+    private List<File> seekByPredicate(List<File> list, BiPredicate<File, Args> predicate) {
+        List<File> resList = new ArrayList<>();
+        for (File file : list) {
+            if (predicate.test(file, args)) {
+                resList.add(file);
+            }
+        }
+        return resList;
+    }
+
+    /*private List<File> seekByCriteria(List<File> list, String flag, String criteria) {
         List<File> resList = new ArrayList<>();
         if (list.size() != 0) {
             if ("-f".equals(flag)) {
@@ -49,7 +73,7 @@ public class FindUtil {
             }
         }
         return resList;
-    }
+    }*/
 
     private void write(List<File> resList, String fileName, String directory) {
         if (resList.size() != 0) {
