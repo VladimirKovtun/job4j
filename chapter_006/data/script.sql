@@ -2,26 +2,27 @@ Create database tasks;
 \c tasks;
 
 Create table state (
-	id integer primary key,
+	id serial primary key,
 	status varchar(50) not null
 );
 
 Create table category (
-	id integer primary key,
+	id serial primary key,
 	name varchar(50) not null
 );
 
 Create table role (
-	id integer primary key,
+	id serial primary key,
 	name varchar(50) not null
 );
 
 Create table rules (
-	id integer primary key,
+	id serial primary key,
 	rule varchar(100) not null
 );
 
 Create table role_to_rules (
+	id serial primary key,
 	role_id integer not null,
 	rules_id integer not null,
 	constraint role_id_fkey foreign key (role_id) references role(id),
