@@ -9,7 +9,7 @@ public class EditAction extends BaseAction {
     }
 
     @Override
-    public boolean execute(Tracker tracker, Input input) {
+    public boolean execute(ITracker tracker, Input input) {
         String name = input.askStr("Enter name: ");
         String id = input.askStr("Enter ID item: ");
         Item item = new Item(name);

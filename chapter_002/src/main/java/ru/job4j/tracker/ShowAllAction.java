@@ -10,7 +10,7 @@ public class ShowAllAction extends BaseAction {
     }
 
     @Override
-    public boolean execute(Tracker tracker, Input input) {
+    public boolean execute(ITracker tracker, Input input) {
         List<Item> allItems = tracker.findAll();
         output.accept(allItems.toString());
         return true;

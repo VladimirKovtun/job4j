@@ -7,7 +7,7 @@ import java.util.List;
 public class StartUI {
 
 
-    public void init(Input input, Tracker tracker, List<BaseAction> userActions) {
+    public void init(Input input, ITracker tracker, List<BaseAction> userActions) {
         boolean run = true;
         while (run) {
             showMenu(userActions);

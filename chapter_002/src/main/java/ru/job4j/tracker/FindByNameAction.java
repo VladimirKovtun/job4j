@@ -10,7 +10,7 @@ public class FindByNameAction extends BaseAction {
     }
 
     @Override
-    public boolean execute(Tracker tracker, Input input) {
+    public boolean execute(ITracker tracker, Input input) {
         String name = input.askStr("Enter name: ");
         List<Item> byName = tracker.findByName(name);
         if (byName != null) {

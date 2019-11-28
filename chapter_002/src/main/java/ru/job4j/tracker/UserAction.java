@@ -6,5 +6,5 @@ public interface UserAction {
 
     public String info();
 
-    public boolean execute(Tracker tracker, Input input);
+    public boolean execute(ITracker tracker, Input input);
 }

@@ -33,6 +33,7 @@ public class Links {
                         setLinks.add(arr);
                         groupMapToSet.put(name, setLinks);
                     } else if (stringMapToGroup.get(arr).equals(stringMapToGroup.get(str))) {
+                        continue;
                     } else {
                         String oldName = name;
                         setLinks = groupMapToSet.get(oldName);

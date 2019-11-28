@@ -20,9 +20,11 @@ public class Client {
             String ans;
             do {
                 out.println(console.readLine());
-                while (!(ans = in.readLine()).isEmpty()) {
+                ans = in.readLine();
+                while (!ans.isEmpty()) {
                     str = ans;
                     System.out.println(str);
+                    ans = in.readLine();
                 }
             } while (!"GoodBye, my friend!".equals(str));
         } catch (IOException exc) {

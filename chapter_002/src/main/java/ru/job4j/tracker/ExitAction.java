@@ -7,7 +7,7 @@ public class ExitAction extends BaseAction {
     }
 
     @Override
-    public boolean execute(Tracker tracker, Input input) {
+    public boolean execute(ITracker tracker, Input input) {
         return false;
     }
 }

@@ -1,9 +1,0 @@
-I: привет
-Bot: Привет!
-console command: закончить
-I: привет
-Bot: Привет!
-console command: закончить
-I: привет
-Bot: Привет!
-console command: закончить
