@@ -31,6 +31,6 @@ public class ConsoleChatTest {
     @Test
     public void whenBotSaysHi() {
         new ConsoleChat("./data/dialog.txt", "./data/phrase.txt").init();
-        assertThat(new String(out.toByteArray()), is("Bot: Привет!" + System.lineSeparator()));
+        assertThat(new String(out.toByteArray()), is("Bot: Hello!" + System.lineSeparator()));
     }
 }
