@@ -5,30 +5,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 public class Config {
-    private final Map<String, String> pathToDb = new HashMap<>();
     private final Properties values = new Properties();
-    Connection connection;
-    Statement statement;
+    private Connection connection;
+    private Statement statement;
 
-    {
-        pathToDb.put("temp", System.getProperty("java.io.tmpdir") + "name.db");
-        pathToDb.put("notTemp", "chapter_007/data/name.db");
-    }
-
-    public Connection init(String key) {
-        String URL;
-        try (InputStream in = Config.class.getClassLoader().getResourceAsStream("appSqlLite.properties")) {
+    public Connection init(String url) {
+        try (InputStream in = Config.class.getClassLoader().getResourceAsStream("appSqlLite.properties")){
             values.load(in);
-            //Class.forName(get("driver-class-name"));
-            URL = get("url");
-            URL = key != null ?
-                    URL.substring(0, URL.lastIndexOf(":memory:")) + pathToDb.get(key) : URL;
-            connection = DriverManager.getConnection(URL);
+            connection = DriverManager.getConnection(get(url));
         } catch (Exception exc) {
             throw new RuntimeException(exc);
         }
@@ -36,19 +23,11 @@ public class Config {
         return connection;
     }
 
-    private String get(String key) {
+    public String get(String key) {
         return values.getProperty(key);
     }
 
-    /*public boolean checkBD(String key) {
-        boolean res = false;
-        if (key != null) {
-            res = new File(pathToDb.get(key)).exists();
-        }
-        return res;
-    }*/
-
-    public void createDB() {
+    private void createDB() {
         if (connection != null) {
             try {
                 statement = connection.createStatement();

@@ -18,7 +18,7 @@ public class StoreSql {
             PreparedStatement prSt = connection.prepareStatement(sqlInsert);
             connection.setAutoCommit(false);
             for (int i = 0; i < size; i++) {
-                prSt.setInt(1, new Random().nextInt(100));
+                prSt.setInt(1, i);
                 prSt.addBatch();
             }
             prSt.executeBatch();
@@ -42,20 +42,13 @@ public class StoreSql {
         return entityList;
     }
 
-    public void closeCon() {
+    private void closeCon() {
         if (connection != null) {
             try {
                 connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
-    }
-    public static void main(String[] args) {
-        StoreSql storeSql = new StoreSql(new Config().init("notTemp"));
-        storeSql.generate(10);
-        for (Entity en : storeSql.load()) {
-            System.out.println(en.getField());
         }
     }
 }

@@ -1,9 +1,10 @@
 package ru.job4j.magnet;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
-@XmlRootElement
+@XmlRootElement(name = "entities")
 public class Entities {
     private List<Entity> list;
 
@@ -19,6 +20,7 @@ public class Entities {
         return list;
     }
 
+    @XmlElement(name = "entity")
     public void setList(List<Entity> list) {
         this.list = list;
     }

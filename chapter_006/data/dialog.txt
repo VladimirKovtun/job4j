@@ -1,0 +1,21 @@
+I: привет
+Bot: РџСЂРёРІРµС‚!
+console command: закончить
+I: привет
+Bot: РџСЂРёРІРµС‚!
+console command: закончить
+I: привет
+Bot: РџСЂРёРІРµС‚!
+console command: закончить
+I: РїСЂРёРІРµС‚
+Bot: РџСЂРёРІРµС‚!
+console command: Р·Р°РєРѕРЅС‡РёС‚СЊ
+I: РїСЂРёРІРµС‚
+Bot: Hello!
+console command: Р·Р°РєРѕРЅС‡РёС‚СЊ
+I: привет
+Bot: Hello!
+console command: закончить
+I: привет
+Bot: Hello!
+console command: закончить
