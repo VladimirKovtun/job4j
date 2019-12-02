@@ -11,6 +11,7 @@ public class TrackerSql implements ITracker, AutoCloseable {
     private String query;
     private Connection connection;
     private Statement statement;
+    private PreparedStatement prStatement;
     private ResultSet resultSet;
 
     public boolean init() {
@@ -45,8 +46,12 @@ public class TrackerSql implements ITracker, AutoCloseable {
                 }
             }
             if (!res) {
-                query = "CREATE TABLE items (id serial primary key, name varchar(100));";
-                exUpdate(query);
+                try {
+                    statement = connection.createStatement();
+                    statement.execute("CREATE TABLE items (id serial primary key, name varchar(100));");
+                } catch (SQLException exc) {
+                    throw new IllegalStateException(exc);
+                }
                 res = true;
                 System.out.println("Table " + TABLE_NAME + " created.");
             }
@@ -56,43 +61,80 @@ public class TrackerSql implements ITracker, AutoCloseable {
 
     @Override
     public Item add(Item item) {
-        query = String.format("INSERT into items(id, name) VALUES (%s), (%s);",
-                item.getId(), item.getName());
-        exUpdate(query);
+        try {
+            prStatement = connection.prepareStatement("INSERT into items(id, name) VALUES (?, ?);");
+            prStatement.setInt(1, Integer.valueOf(item.getId()));
+            prStatement.setString(2, item.getName());
+            prStatement.execute();
+        } catch (SQLException exc) {
+            throw new IllegalStateException(exc);
+        }
         return item;
     }
 
     @Override
     public boolean replace(String id, Item item) {
-        query = String.format("UPDATE items SET id = %s, name = %s WHERE id = %s;",
-                item.getId(), item.getName(), id);
-        return exUpdate(query);
+        boolean res = false;
+        try {
+            prStatement = connection.prepareStatement("UPDATE items SET id = ?, name = ? WHERE id = ?;");
+            prStatement.setInt(1, Integer.valueOf(item.getId()));
+            prStatement.setString(2, item.getName());
+            prStatement.setInt(2, Integer.valueOf(id));
+            prStatement.execute();
+            res = true;
+        } catch (SQLException exc) {
+            throw new IllegalStateException(exc);
+        }
+        return res;
     }
 
     @Override
     public boolean delete(String id) {
-        query = String.format("DELETE FROM items WHERE id = %s;", id);
-        return exUpdate(query);
+        boolean res = false;
+        try {
+            prStatement = connection.prepareStatement("DELETE FROM items WHERE id = ?;");
+            prStatement.setInt(1, Integer.valueOf(id));
+            prStatement.execute();
+            res = true;
+        } catch (SQLException exc) {
+            throw new IllegalStateException(exc);
+        }
+        return res;
     }
 
     @Override
     public List<Item> findAll() {
-        query = "SELECT id, name FROM items;";
-        resultSet = exQuery(query);
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT id, name FROM items;");
+        } catch (SQLException exc) {
+            throw new IllegalStateException();
+        }
         return getResult(resultSet);
     }
 
     @Override
     public List<Item> findByName(String key) {
-        query = String.format("SELECT id, name FROM items WHERE name = %s;", key);
-        resultSet = exQuery(query);
+        try {
+            prStatement = connection.prepareStatement("SELECT id, name FROM items WHERE name = ?;");
+            prStatement.setString(1, key);
+            resultSet = prStatement.executeQuery();
+        } catch (SQLException exc) {
+            throw new IllegalStateException();
+        }
         return getResult(resultSet);
+
     }
 
     @Override
     public Item findById(String id) {
-        query = String.format("SELECT id, name FROM items WHERE id = %s;", id);
-        resultSet = exQuery(query);
+        try {
+            prStatement = connection.prepareStatement("SELECT id, name FROM items WHERE id = ?;");
+            prStatement.setInt(1, Integer.valueOf(id));
+            resultSet = prStatement.executeQuery();
+        } catch (SQLException exc) {
+            throw new IllegalStateException();
+        }
         return getResult(resultSet).get(0);
     }
 
@@ -111,25 +153,6 @@ public class TrackerSql implements ITracker, AutoCloseable {
             throw new IllegalStateException();
         }
         return res;
-    }
-
-    private ResultSet exQuery(String query) {
-        try {
-            statement = connection.createStatement();
-            return statement.executeQuery(query);
-        } catch (SQLException exc) {
-            throw new IllegalStateException();
-        }
-    }
-
-    private boolean exUpdate(String query) {
-        try {
-            statement = connection.createStatement();
-            statement.execute(query);
-            return true;
-        } catch (SQLException exc) {
-            return false;
-        }
     }
 
     public void closeCon() {
