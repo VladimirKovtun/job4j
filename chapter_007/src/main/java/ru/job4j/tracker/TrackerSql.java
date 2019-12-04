@@ -10,9 +10,7 @@ public class TrackerSql implements ITracker, AutoCloseable {
     private static final String TABLE_NAME = "items";
     private String query;
     private Connection connection;
-    private Statement statement;
-    private PreparedStatement prStatement;
-    private ResultSet resultSet;
+
 
     public boolean init() {
         boolean isExist = false;
@@ -36,18 +34,18 @@ public class TrackerSql implements ITracker, AutoCloseable {
     public boolean tableExist() throws SQLException {
         boolean res = false;
         if (connection != null) {
-            ResultSet rs = connection.getMetaData()
-                    .getTables(null, null, TABLE_NAME, null);
-            while (rs.next()) {
-                String tName = rs.getString("TABLE_NAME");
-                if (TABLE_NAME.equals(tName)) {
-                    res = true;
-                    break;
+            try (ResultSet rs = connection.getMetaData()
+                    .getTables(null, null, TABLE_NAME, null)) {
+                while (rs.next()) {
+                    String tName = rs.getString("TABLE_NAME");
+                    if (TABLE_NAME.equals(tName)) {
+                        res = true;
+                        break;
+                    }
                 }
             }
             if (!res) {
-                try {
-                    statement = connection.createStatement();
+                try (Statement statement = connection.createStatement()) {
                     statement.execute("CREATE TABLE items (id serial primary key, name varchar(100));");
                 } catch (SQLException exc) {
                     throw new IllegalStateException(exc);
@@ -55,14 +53,15 @@ public class TrackerSql implements ITracker, AutoCloseable {
                 res = true;
                 System.out.println("Table " + TABLE_NAME + " created.");
             }
+
         }
         return res;
     }
 
     @Override
     public Item add(Item item) {
-        try {
-            prStatement = connection.prepareStatement("INSERT into items(id, name) VALUES (?, ?);");
+        try (PreparedStatement prStatement =
+                     connection.prepareStatement("INSERT into items(id, name) VALUES (?, ?);");) {
             prStatement.setInt(1, Integer.valueOf(item.getId()));
             prStatement.setString(2, item.getName());
             prStatement.execute();
@@ -74,9 +73,9 @@ public class TrackerSql implements ITracker, AutoCloseable {
 
     @Override
     public boolean replace(String id, Item item) {
-        boolean res = false;
-        try {
-            prStatement = connection.prepareStatement("UPDATE items SET id = ?, name = ? WHERE id = ?;");
+        boolean res;
+        try (PreparedStatement prStatement =
+                     connection.prepareStatement("UPDATE items SET id = ?, name = ? WHERE id = ?;")) {
             prStatement.setInt(1, Integer.valueOf(item.getId()));
             prStatement.setString(2, item.getName());
             prStatement.setInt(2, Integer.valueOf(id));
@@ -90,9 +89,9 @@ public class TrackerSql implements ITracker, AutoCloseable {
 
     @Override
     public boolean delete(String id) {
-        boolean res = false;
-        try {
-            prStatement = connection.prepareStatement("DELETE FROM items WHERE id = ?;");
+        boolean res;
+        try (PreparedStatement prStatement =
+                     connection.prepareStatement("DELETE FROM items WHERE id = ?;")) {
             prStatement.setInt(1, Integer.valueOf(id));
             prStatement.execute();
             res = true;
@@ -104,8 +103,8 @@ public class TrackerSql implements ITracker, AutoCloseable {
 
     @Override
     public List<Item> findAll() {
-        try {
-            statement = connection.createStatement();
+        ResultSet resultSet;
+        try (Statement statement = connection.createStatement()) {
             resultSet = statement.executeQuery("SELECT id, name FROM items;");
         } catch (SQLException exc) {
             throw new IllegalStateException();
@@ -115,8 +114,9 @@ public class TrackerSql implements ITracker, AutoCloseable {
 
     @Override
     public List<Item> findByName(String key) {
-        try {
-            prStatement = connection.prepareStatement("SELECT id, name FROM items WHERE name = ?;");
+        ResultSet resultSet;
+        try (PreparedStatement prStatement =
+                     connection.prepareStatement("SELECT id, name FROM items WHERE name = ?;")) {
             prStatement.setString(1, key);
             resultSet = prStatement.executeQuery();
         } catch (SQLException exc) {
@@ -128,8 +128,9 @@ public class TrackerSql implements ITracker, AutoCloseable {
 
     @Override
     public Item findById(String id) {
-        try {
-            prStatement = connection.prepareStatement("SELECT id, name FROM items WHERE id = ?;");
+        ResultSet resultSet;
+        try (PreparedStatement prStatement =
+                     connection.prepareStatement("SELECT id, name FROM items WHERE id = ?;")) {
             prStatement.setInt(1, Integer.valueOf(id));
             resultSet = prStatement.executeQuery();
         } catch (SQLException exc) {
