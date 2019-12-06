@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class FindByNameActionTest {
@@ -29,9 +30,9 @@ public class FindByNameActionTest {
     @Test
     public void whenSeekByName() {
         Tracker tracker = new Tracker();
-        tracker.add(new Item("First"));
-        tracker.add(new Item("Second"));
-        tracker.add(new Item("Second"));
+        tracker.add(new Item("First", "Description", new Date()));
+        tracker.add(new Item("Second", "Description", new Date()));
+        tracker.add(new Item("Second", "Description", new Date()));
         List<String> answers = Arrays.asList("Second");
         new FindByNameAction(0, "Find items by name.", System.out::print).execute(tracker, new StubInput(answers));
         Assert.assertThat(new String(out.toByteArray()), Is.is(tracker.findByName("Second").toString()));

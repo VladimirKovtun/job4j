@@ -31,7 +31,7 @@ public class StoreSql {
 
     public List<Entity> load() {
         List<Entity> entityList = new ArrayList<>();
-        try(ResultSet resultSet = connection.createStatement().executeQuery("SELECT * from entity;")) {
+        try (ResultSet resultSet = connection.createStatement().executeQuery("SELECT * from entity;")) {
             while (resultSet.next()) {
                 entityList.add(new Entity(resultSet.getInt(1)));
             }

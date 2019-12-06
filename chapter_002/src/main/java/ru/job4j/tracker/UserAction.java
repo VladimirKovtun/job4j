@@ -2,9 +2,9 @@ package ru.job4j.tracker;
 
 public interface UserAction {
 
-    public int key();
+    int key();
 
-    public String info();
+    String info();
 
-    public boolean execute(ITracker tracker, Input input);
+    boolean execute(ITracker tracker, Input input);
 }

@@ -16,7 +16,7 @@ public class ConvertXSQT {
             Transformer transformer = tf.newTransformer(new StreamSource(new FileInputStream(scheme)));
             transformer.transform(new StreamSource(new FileInputStream(source)), new StreamResult(new FileOutputStream(dest)));
 
-        }catch (Exception exc) {
+        } catch (Exception exc) {
             throw new RuntimeException(exc);
         }
     }

@@ -13,7 +13,7 @@ public class Config {
     private Statement statement;
 
     public Connection init(String url) {
-        try (InputStream in = Config.class.getClassLoader().getResourceAsStream("appSqlLite.properties")){
+        try (InputStream in = Config.class.getClassLoader().getResourceAsStream("appSqlLite.properties")) {
             values.load(in);
             connection = DriverManager.getConnection(get(url));
         } catch (Exception exc) {

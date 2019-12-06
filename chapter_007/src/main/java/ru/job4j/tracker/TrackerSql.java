@@ -1,5 +1,8 @@
 package ru.job4j.tracker;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
@@ -7,13 +10,20 @@ import java.util.List;
 import java.util.Properties;
 
 public class TrackerSql implements ITracker, AutoCloseable {
+    private final Logger logger = LogManager.getLogger(TrackerSql.class.getName());
     private static final String TABLE_NAME = "items";
-    private String query;
     private Connection connection;
 
+    public TrackerSql() {
+    }
 
-    public boolean init() {
-        boolean isExist = false;
+    public TrackerSql(Connection connection) {
+        this.connection = connection;
+    }
+
+
+    public Connection init() {
+        Connection connection;
         try (InputStream in = TrackerSql.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
@@ -22,16 +32,18 @@ public class TrackerSql implements ITracker, AutoCloseable {
                     config.getProperty("url"),
                     config.getProperty("username"),
                     config.getProperty("password"));
-            isExist = tableExist();
-        } catch (SQLException exc) {
-            throw new IllegalStateException();
         } catch (Exception exc) {
-            exc.printStackTrace();
+            logger.error(exc.getMessage(), exc);
+            throw new IllegalStateException();
         }
-        return connection != null && isExist;
+        if (!tableExist(connection)) {
+            logger.error("Can't create table");
+            throw new IllegalStateException();
+        }
+        return connection;
     }
 
-    public boolean tableExist() throws SQLException {
+    private boolean tableExist(Connection connection) {
         boolean res = false;
         if (connection != null) {
             try (ResultSet rs = connection.getMetaData()
@@ -43,46 +55,55 @@ public class TrackerSql implements ITracker, AutoCloseable {
                         break;
                     }
                 }
+            } catch (SQLException exc) {
+                logger.error(exc.getMessage(), exc);
+                throw new IllegalStateException();
             }
             if (!res) {
                 try (Statement statement = connection.createStatement()) {
-                    statement.execute("CREATE TABLE items (id serial primary key, name varchar(100));");
+                    statement.execute("CREATE TABLE items (id serial primary key, name varchar(100), description text);");
                 } catch (SQLException exc) {
-                    throw new IllegalStateException(exc);
+                    logger.error(exc.getMessage(), exc);
+                    throw new IllegalStateException();
                 }
                 res = true;
-                System.out.println("Table " + TABLE_NAME + " created.");
             }
-
         }
         return res;
     }
 
     @Override
     public Item add(Item item) {
-        try (PreparedStatement prStatement =
-                     connection.prepareStatement("INSERT into items(id, name) VALUES (?, ?);");) {
-            prStatement.setInt(1, Integer.valueOf(item.getId()));
-            prStatement.setString(2, item.getName());
-            prStatement.execute();
+        Item resultItem = null;
+        try (PreparedStatement insertStatement =
+                                         connection.prepareStatement("INSERT into items(name, description) VALUES (?, ?);");
+             PreparedStatement selectStatement = connection.prepareStatement("SELECT * from items where name = ?;")) {
+            insertStatement.setString(1, item.getName());
+            insertStatement.setString(2, item.getDescription());
+            insertStatement.execute();
+            selectStatement.setString(1, item.getName());
+            ResultSet resultSet = selectStatement.executeQuery();
+            resultItem = getResult(resultSet).get(0);
         } catch (SQLException exc) {
-            throw new IllegalStateException(exc);
+            logger.error(exc.getMessage(), exc);
         }
-        return item;
+        return resultItem;
     }
 
     @Override
     public boolean replace(String id, Item item) {
         boolean res;
         try (PreparedStatement prStatement =
-                     connection.prepareStatement("UPDATE items SET id = ?, name = ? WHERE id = ?;")) {
-            prStatement.setInt(1, Integer.valueOf(item.getId()));
-            prStatement.setString(2, item.getName());
-            prStatement.setInt(2, Integer.valueOf(id));
+                     connection.prepareStatement("UPDATE items SET name = ?, description = ?, createDate = ? WHERE id = ?;")) {
+            prStatement.setString(1, item.getName());
+            prStatement.setString(2, item.getDescription());
+            prStatement.setTime(3, (Time) item.getCreateDate());
+            prStatement.setInt(4, Integer.valueOf(id));
             prStatement.execute();
             res = true;
         } catch (SQLException exc) {
-            throw new IllegalStateException(exc);
+            logger.error(exc.getMessage(), exc);
+            res = false;
         }
         return res;
     }
@@ -96,77 +117,72 @@ public class TrackerSql implements ITracker, AutoCloseable {
             prStatement.execute();
             res = true;
         } catch (SQLException exc) {
-            throw new IllegalStateException(exc);
+            logger.error(exc.getMessage(), exc);
+            res = false;
         }
         return res;
     }
 
     @Override
     public List<Item> findAll() {
-        ResultSet resultSet;
+        List<Item> resultList = null;
         try (Statement statement = connection.createStatement()) {
-            resultSet = statement.executeQuery("SELECT id, name FROM items;");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM items;");
+            resultList = getResult(resultSet);
         } catch (SQLException exc) {
-            throw new IllegalStateException();
+            logger.error(exc.getMessage(), exc);
         }
-        return getResult(resultSet);
+        return resultList;
     }
 
     @Override
     public List<Item> findByName(String key) {
-        ResultSet resultSet;
+        List<Item> resultList = null;
         try (PreparedStatement prStatement =
-                     connection.prepareStatement("SELECT id, name FROM items WHERE name = ?;")) {
+                     connection.prepareStatement("SELECT * FROM items WHERE name = ?;")) {
             prStatement.setString(1, key);
-            resultSet = prStatement.executeQuery();
+            ResultSet resultSet = prStatement.executeQuery();
+            resultList = getResult(resultSet);
         } catch (SQLException exc) {
-            throw new IllegalStateException();
+            logger.error(exc.getMessage(), exc);
         }
-        return getResult(resultSet);
-
+        return resultList;
     }
 
     @Override
     public Item findById(String id) {
-        ResultSet resultSet;
+        Item resItem = null;
         try (PreparedStatement prStatement =
-                     connection.prepareStatement("SELECT id, name FROM items WHERE id = ?;")) {
+                     connection.prepareStatement("SELECT * FROM items WHERE id = ?;")) {
             prStatement.setInt(1, Integer.valueOf(id));
-            resultSet = prStatement.executeQuery();
+           ResultSet resultSet = prStatement.executeQuery();
+           resItem = getResult(resultSet).get(0);
         } catch (SQLException exc) {
-            throw new IllegalStateException();
+            logger.error(exc.getMessage(), exc);
         }
-        return getResult(resultSet).get(0);
+        return resItem;
     }
 
     private List<Item> getResult(ResultSet resultSet) {
-        Item item;
-        List<Item> res = new ArrayList<>();
+        List<Item> resultList = new ArrayList<>();
         try {
             while (resultSet.next()) {
-                String itemId = String.valueOf(resultSet.getInt("id"));
-                String name = resultSet.getString("name");
-                item = new Item(name);
-                item.setId(itemId);
-                res.add(item);
+                Item newItem = new Item(resultSet.getString("name"));
+                newItem.setId(String.valueOf(resultSet.getInt("id")));
+                resultList.add(newItem);
             }
         } catch (SQLException exc) {
-            throw new IllegalStateException();
+            logger.error(exc.getMessage(), exc);
         }
-        return res;
-    }
-
-    public void closeCon() {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                throw new IllegalStateException();
-            }
-        }
+        return resultList;
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+        }
     }
 }

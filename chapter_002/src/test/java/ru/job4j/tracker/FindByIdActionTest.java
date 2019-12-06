@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class FindByIdActionTest {
@@ -28,11 +29,12 @@ public class FindByIdActionTest {
     @Test
     public void whenSeekById() {
         Tracker tracker = new Tracker();
-        Item item = new Item("Test");
+        Item item = new Item("Test", "Description", new Date());
         tracker.add(item);
         List<String> answers = Arrays.asList(item.getId());
         new FindByIdAction(0, "Find item by ID.", System.out::print).execute(tracker, new StubInput(answers));
         Assert.assertThat(new String(out.toByteArray()),
-                Is.is(String.format("Item ID %s, Item name %s", item.getId(), item.getName())));
+                Is.is(String.format("Item ID %s, Item name %s, Item description %s, Item create_date %tF",
+                        item.getId(), item.getName(), item.getDescription(), item.getCreateDate())));
     }
 }

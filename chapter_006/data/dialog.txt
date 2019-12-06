@@ -19,3 +19,33 @@ console command: закончить
 I: привет
 Bot: Hello!
 console command: закончить
+I: привет
+Bot: Hello!
+console command: закончить
+I: привет
+Bot: Hello!
+console command: закончить
+I: привет
+Bot: Hello!
+console command: закончить
+I: привет
+Bot: Hello!
+console command: закончить
+I: привет
+Bot: Hello!
+console command: закончить
+I: привет
+Bot: Hello!
+console command: закончить
+I: привет
+Bot: Hello!
+console command: закончить
+I: привет
+Bot: Hello!
+console command: закончить
+I: привет
+Bot: Hello!
+console command: закончить
+I: привет
+Bot: Hello!
+console command: закончить
