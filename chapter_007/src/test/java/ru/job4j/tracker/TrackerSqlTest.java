@@ -30,8 +30,7 @@ public class TrackerSqlTest {
 
     @Test
     public void whenCheckConnection() {
-        TrackerSql sql = new TrackerSql();
-        assertNotNull(sql.init());
+        assertNotNull(TrackerSqlConnection.getConnection());
     }
 
     @Test
