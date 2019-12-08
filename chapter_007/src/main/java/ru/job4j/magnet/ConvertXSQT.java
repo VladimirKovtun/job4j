@@ -9,8 +9,17 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class ConvertXSQT {
+    private File source;
+    private File dest;
+    private File scheme;
 
-    public void convert(File source, File dest, File scheme) {
+    public ConvertXSQT(File source, File dest, File scheme) {
+        this.source = source;
+        this.dest = dest;
+        this.scheme = scheme;
+    }
+
+    public void convert() {
         try {
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer(new StreamSource(new FileInputStream(scheme)));

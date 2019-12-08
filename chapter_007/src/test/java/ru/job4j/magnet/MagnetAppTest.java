@@ -12,16 +12,14 @@ public class MagnetAppTest {
     @Test
     public void whenGenerate10ThenSum45() {
         Config config = new Config();
-        StoreSql storeSql = new StoreSql(config.init("url"));
-        storeSql.generate(10);
-        StoreXml storeXml = new StoreXml(new File(config.get("pathXmlTest")));
-        storeXml.save(storeSql.load());
-        ConvertXSQT convertXSQT = new ConvertXSQT();
-        convertXSQT.convert(new File(config.get("pathXmlTest")),
-                new File(config.get("pathXsltXmlTest")), new File(config.get("pathSchemaXsltTest")));
-        MagnetApp app = new MagnetApp();
-        app.saxParseToInt(new File(config.get("pathXsltXmlTest")));
-        assertThat(MagnetApp.getNumber(), is(45));
+        int sum = new MagnetApp(new StoreSql(config.init("url")),
+                                new StoreXml(new File(config.get("pathXmlTest"))),
+                                new ConvertXSQT(new File(config.get("pathXmlTest")),
+                                                new File(config.get("pathXsltXmlTest")),
+                                                new File(config.get("pathSchemaXsltTest"))),
+                                                new File(config.get("pathXsltXmlTest")))
+                                .parse(10);
+        assertThat(sum, is(45));
     }
 
 }

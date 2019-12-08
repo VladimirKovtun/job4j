@@ -10,7 +10,6 @@ import java.util.Properties;
 public class Config {
     private final Properties values = new Properties();
     private Connection connection;
-    private Statement statement;
 
     public Connection init(String url) {
         try (InputStream in = Config.class.getClassLoader().getResourceAsStream("appSqlLite.properties")) {
@@ -29,8 +28,7 @@ public class Config {
 
     private void createDB() {
         if (connection != null) {
-            try {
-                statement = connection.createStatement();
+            try (Statement statement = connection.createStatement()) {
                 statement.execute("DROP table if exists entity;");
                 statement.execute("CREATE table entity (field integer);");
             } catch (SQLException exc) {
