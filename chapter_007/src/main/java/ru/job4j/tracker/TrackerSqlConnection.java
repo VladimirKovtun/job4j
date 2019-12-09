@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.Properties;
 
 public final class TrackerSqlConnection {
-    private static final Logger logger = LogManager.getLogger(TrackerSqlConnection.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(TrackerSqlConnection.class.getName());
     private static final String TABLE_NAME = "items";
     private static Connection connection;
 
@@ -34,11 +34,11 @@ public final class TrackerSqlConnection {
                     config.getProperty("username"),
                     config.getProperty("password"));
         } catch (Exception exc) {
-            logger.error(exc.getMessage(), exc);
+            LOGGER.error(exc.getMessage(), exc);
             throw new IllegalStateException();
         }
         if (!tableExist(connection)) {
-            logger.error("Can't create table");
+            LOGGER.error("Can't create table");
             throw new IllegalStateException();
         }
         return connection;
@@ -57,14 +57,14 @@ public final class TrackerSqlConnection {
                     }
                 }
             } catch (SQLException exc) {
-                logger.error(exc.getMessage(), exc);
+                LOGGER.error(exc.getMessage(), exc);
                 throw new IllegalStateException();
             }
             if (!res) {
                 try (Statement statement = connection.createStatement()) {
                     statement.execute("CREATE TABLE items (id serial primary key, name varchar(100), description text);");
                 } catch (SQLException exc) {
-                    logger.error(exc.getMessage(), exc);
+                    LOGGER.error(exc.getMessage(), exc);
                     throw new IllegalStateException();
                 }
                 res = true;
