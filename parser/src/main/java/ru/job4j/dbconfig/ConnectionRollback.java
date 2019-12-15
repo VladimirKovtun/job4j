@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.dbconfig;
 
 import java.lang.reflect.Proxy;
 import java.sql.Connection;

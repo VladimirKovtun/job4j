@@ -2,30 +2,34 @@ package ru.job4j;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
 
-public class ParseStart {
-    private static Properties properties = new Properties();
-    private static Logger logger = LogManager.getLogger(ParseStart.class.getName());
+public class SchedulerManager {
+    private static Logger logger = LogManager.getLogger(SchedulerManager.class.getName());
+    private Properties properties;
+    private Class<? extends Job> execute;
 
-    public static void main(String[] args) {
-        loadProperty();
+    public SchedulerManager(Properties properties, Class<? extends Job> execute) {
+        this.properties = properties;
+        this.execute = execute;
+    }
+
+    public void handler() {
         try {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
 
-            JobDetail sqlJob = newJob(ExecuteParser.class)
+            JobDetail sqlJob = newJob(execute)
                     .withIdentity("JS", "group1")
                     .build();
+
+            sqlJob.getJobDataMap().put("properties", properties);
 
             CronTrigger cTrigger = newTrigger()
                     .withIdentity("TS", "group1")
@@ -35,14 +39,6 @@ public class ParseStart {
             scheduler.scheduleJob(sqlJob, cTrigger);
         } catch (SchedulerException exc) {
             logger.error(exc.getMessage(), exc);
-        }
-    }
-
-    private static void loadProperty() {
-        try (InputStream in = ParseStart.class.getClassLoader().getResourceAsStream("app.properties")) {
-            properties.load(in);
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
         }
     }
 }

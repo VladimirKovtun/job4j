@@ -1,37 +1,38 @@
-package ru.job4j;
+package ru.job4j.parsersqlru;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.IParserDAO;
 
 import java.sql.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParserRepository implements IParser<Vacancy>, AutoCloseable {
-    private final Logger logger = LogManager.getLogger(ParserRepository.class.getName());
+public class ParserSqlRuRepository implements IParserDAO<Vacancy>, AutoCloseable {
+    private final Logger logger = LogManager.getLogger(ParserSqlRuRepository.class.getName());
     private final Connection connection;
 
-    public ParserRepository(Connection connection) {
+    public ParserSqlRuRepository(Connection connection) {
         this.connection = connection;
     }
 
     @Override
     public Vacancy create(Vacancy vacancy) {
         String query = "INSERT INTO vacancy(title, message, link, create_time) VALUES(?, ?, ?, ?)"
-                                            + " ON CONFLICT (title, link) DO NOTHING ;";
+                + " ON CONFLICT (title) DO NOTHING ;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-              PreparedStatement selectStatement =
-                      connection.prepareStatement("SELECT id FROM vacancy WHERE title = ?")) {
+             PreparedStatement selectStatement =
+                     connection.prepareStatement("SELECT id FROM vacancy WHERE title = ?")) {
             preparedStatement.setString(1, vacancy.getTitle());
             preparedStatement.setString(2, vacancy.getMessage());
             preparedStatement.setString(3, vacancy.getLink());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(vacancy.getCreateTime()));
             preparedStatement.execute();
             selectStatement.setString(1, vacancy.getTitle());
-            vacancy.setId(selectStatement.executeQuery().getInt("id"));
+            ResultSet resultSet = selectStatement.executeQuery();
+            resultSet.next();
+            vacancy.setId(resultSet.getInt("id"));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -40,26 +41,23 @@ public class ParserRepository implements IParser<Vacancy>, AutoCloseable {
 
     @Override
     public void createAll(List<Vacancy> list) {
-        String query = "INSERT INTO vacancy(title, message, link, create_time) VALUES(?, ?, ?, ?);";
-        try {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                for (Vacancy vacancy : list) {
-                    preparedStatement.setString(1, vacancy.getTitle());
-                    preparedStatement.setString(2, vacancy.getMessage());
-                    preparedStatement.setString(3, vacancy.getLink());
-                    preparedStatement.setTimestamp(4, Timestamp.valueOf(vacancy.getCreateTime()));
-                    preparedStatement.executeUpdate();
-                    //preparedStatement.addBatch();
-                }
-                //preparedStatement.executeBatch();
-                //connection.commit();
-            } catch (Exception e) {
-                connection.rollback();
-                logger.error(e.getMessage(), e);
+        String query = "INSERT INTO vacancy(title, message, link, create_time) VALUES(?, ?, ?, ?)"
+                        + "ON CONFLICT (title) DO NOTHING ;";
+        int pcs = 0;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            for (Vacancy vacancy : list) {
+                preparedStatement.setString(1, vacancy.getTitle());
+                preparedStatement.setString(2, vacancy.getMessage());
+                preparedStatement.setString(3, vacancy.getLink());
+                preparedStatement.setTimestamp(4, Timestamp.valueOf(vacancy.getCreateTime()));
+                preparedStatement.addBatch();
+                pcs++;
             }
-        } catch (SQLException e) {
-            logger.info(e.getMessage(), e);
+            preparedStatement.executeBatch();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
         }
+        logger.info("Vacancy was added to database {}", pcs);
     }
 
     @Override
@@ -80,7 +78,7 @@ public class ParserRepository implements IParser<Vacancy>, AutoCloseable {
         List<Vacancy> vacancyList = null;
         String query = "SELECT * FROM vacancy;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-             vacancyList = getResult(preparedStatement.executeQuery());
+            vacancyList = getResult(preparedStatement.executeQuery());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -104,26 +102,13 @@ public class ParserRepository implements IParser<Vacancy>, AutoCloseable {
         return row > 0;
     }
 
-    @Override
-    public boolean delete(int id) {
-        int row = 0;
-        String query = "DELETE FROM vacancy WHERE id = ?;";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, id);
-            row = preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-        return row > 0;
-    }
-
     public LocalDateTime getLastTime() {
         logger.info("Try get create_time last added vacancy");
         Vacancy vacancy = null;
         String quantityQuery = "SELECT COUNT(*) FROM vacancy;";
-        String query = "SELECT * FROM vacancy ORDER BY create_time DESC LIMIT 1;";
+        String queryNewVacancy = "SELECT * FROM vacancy ORDER BY create_time DESC LIMIT 1;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(quantityQuery);
-             PreparedStatement prStat = connection.prepareStatement(query);
+             PreparedStatement prStat = connection.prepareStatement(queryNewVacancy);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             resultSet.next();
             if (resultSet.getInt(1) > 0) {
@@ -155,19 +140,10 @@ public class ParserRepository implements IParser<Vacancy>, AutoCloseable {
         return vacancyList;
     }
 
-    /*private Timestamp ldtToTimeStamp(LocalDateTime ldt) {
-        //Timestamp timestamp = new Timestamp(ldt.toInstant(ZoneOffset.UTC).toEpochMilli());
-        return Timestamp.valueOf(ldt);
-    }
-
-    private LocalDateTime tsToLocalDateTime(Timestamp ts) {
-        //LocalDateTime.ofInstant(Instant.ofEpochSecond(ts.getTime()), ZoneOffset.UTC);
-        return ts.toLocalDateTime();
-    }*/
-
     @Override
     public void close() {
         try {
+            logger.info("Connection closed {}", connection.toString());
             connection.close();
         } catch (SQLException e) {
             logger.error(e.getMessage(), e);

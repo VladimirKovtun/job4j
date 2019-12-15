@@ -5,18 +5,19 @@ import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.io.File;
 import java.io.IOException;
 
-public abstract class Parser {
-    protected static Logger logger = LogManager.getLogger(Parser.class.getName());
+public abstract class ParserFilter {
+    protected static Logger logger = LogManager.getLogger(ParserFilter.class.getName());
 
    protected static Document parse(String url) throws IOException {
        Document document;
        try {
            document = Jsoup.connect(url).get();
-       } catch (IOException e) {
-           logger.error(e.getMessage(), e);
-           document = Jsoup.parse(url);
+       } catch (IllegalArgumentException e) {
+           String uri = url.lastIndexOf("1") == url.length() - 1 ? url.substring(0, url.length() - 1) : url;
+           document = Jsoup.parse(new File(uri), "UTF-8", "");
        }
         return document;
     }

@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.parsersqlru;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +11,13 @@ public class Vacancy {
 
     public Vacancy() {
 
+    }
+
+    public Vacancy(String title, String message, String link, LocalDateTime createTime) {
+        this.title = title;
+        this.message = message;
+        this.link = link;
+        this.createTime = createTime;
     }
 
     public Vacancy(int id, String title, String message, String link, LocalDateTime createTime) {
@@ -64,11 +71,11 @@ public class Vacancy {
     @Override
     public String toString() {
         return "Vacancy{"
-                + "id='" + id + '\''
-                + "title='" + title + '\''
+                + "id=" + id
+                + ", title='" + title + '\''
                 + ", message='" + message + '\''
                 + ", link='" + link + '\''
-                + ", createTime='" + createTime + '\''
+                + ", createTime=" + createTime
                 + '}';
     }
 }

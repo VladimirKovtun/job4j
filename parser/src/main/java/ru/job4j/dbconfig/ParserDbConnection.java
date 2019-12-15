@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.dbconfig;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +20,7 @@ public final class ParserDbConnection {
         if (connection == null) {
             connection = config();
         }
+        LOGGER.info("connection - {}", connection.toString());
         return connection;
     }
 
@@ -40,7 +41,7 @@ public final class ParserDbConnection {
         if (!dbExist(connection)) {
             createDB(connection);
         }
-        LOGGER.info("Connected success!");
+        LOGGER.info("Create connection {}", connection.toString());
         return connection;
     }
 
@@ -50,7 +51,7 @@ public final class ParserDbConnection {
                     + "id serial primary key,"
                     + "title text NOT NULL UNIQUE,"
                     + "message text NOT NULL,"
-                    + "link text NOT NULL UNIQUE,"
+                    + "link text NOT NULL,"
                     + "create_time TIMESTAMP NOT NULL);", prop.getProperty("table.name")));
         } catch (Exception exc) {
             LOGGER.error(exc.getMessage(), exc);
@@ -66,6 +67,7 @@ public final class ParserDbConnection {
             while (tables.next()) {
                 tName = tables.getString("TABLE_NAME");
                 if (prop.getProperty("table.name").equals(tName)) {
+                    LOGGER.info("Database and table exists.");
                     exists = true;
                     break;
                 }
