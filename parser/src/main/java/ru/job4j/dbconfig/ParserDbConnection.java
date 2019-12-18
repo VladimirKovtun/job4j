@@ -16,8 +16,8 @@ public final class ParserDbConnection {
 
     }
 
-    public static Connection getConnection() {
-        if (connection == null) {
+    public static Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
             connection = config();
         }
         LOGGER.info("connection - {}", connection.toString());
