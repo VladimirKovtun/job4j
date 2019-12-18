@@ -6,6 +6,7 @@ import org.quartz.*;
 import ru.job4j.dbconfig.ParserDbConnection;
 import ru.job4j.util.TimeParse;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -21,17 +22,19 @@ public class ExecuteParserJob implements Job {
         LOGGER.info("Start parsing, next start - {}", jobExecutionContext.getNextFireTime().toInstant());
         JobDataMap jobDataMap = jobExecutionContext.getJobDetail().getJobDataMap();
         Properties properties = (Properties) jobDataMap.get("properties");
-        ParserSqlRuRepository repository = new ParserSqlRuRepository(ParserDbConnection.getConnection());
-        Date prevFireTime = jobExecutionContext.getPreviousFireTime();
-        if (prevFireTime == null) {
-            LOGGER.info("Previous time is unknown.");
-            localDateTime = repository.getLastTime();
-        } else {
-            LOGGER.info("Previous time and time for search {}", prevFireTime.toInstant());
-            localDateTime = TimeParse.dateToLocalDateTime(prevFireTime);
+        try (ParserSqlRuRepository repository = new ParserSqlRuRepository(ParserDbConnection.getConnection())) {
+            Date prevFireTime = jobExecutionContext.getPreviousFireTime();
+            if (prevFireTime == null) {
+                LOGGER.info("Previous time is unknown.");
+                localDateTime = repository.getLastTime();
+            } else {
+                LOGGER.info("Previous time and time for search {}", prevFireTime.toInstant());
+                localDateTime = TimeParse.dateToLocalDateTime(prevFireTime);
+            }
+            List<Vacancy> vacancyList = SqlParserVacancy.parseSql(localDateTime, "url", properties);
+            repository.createAll(vacancyList);
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage(), e);
         }
-        List<Vacancy> vacancyList = SqlParserVacancy.parseSql(localDateTime, "url", properties);
-        repository.createAll(vacancyList);
-        //repository.close();
     }
 }

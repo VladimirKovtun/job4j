@@ -8,8 +8,7 @@
             <Layout type="PatternLayout" pattern="%d %p %c [%t] %m%n" />
         </Console>
         <RollingFile name="rollingFile"
-                     fileName="logs/log4j2.log"
-                     filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+                     fileName="logs/log4j2.log">
             <PatternLayout>
                 <Pattern>%d %p %c [%t] %m%n</Pattern>
             </PatternLayout>
