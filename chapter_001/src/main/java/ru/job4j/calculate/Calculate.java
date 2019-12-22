@@ -7,14 +7,13 @@ package ru.job4j.calculate;
  */
 public class Calculate {
     /**
-     * Adding numbers.
+     * Addition numbers.
      *
      * @param first - first number.
      * @param second - second number.
      */
-    public static void add(double first, double second) {
-        double result = first + second;
-        System.out.println(first + " + " + second + " = " + result);
+    public double add(double first, double second) {
+        return first + second;
     }
     /**
      * Subtract numbers.
@@ -22,9 +21,8 @@ public class Calculate {
      * @param first - first number.
      * @param second - second number.
      */
-    public static void subtrack(double first, double second) {
-        double result = first - second;
-        System.out.println(first + " - " + second + " = " + result);
+    public double subTract(double first, double second) {
+        return first - second;
     }
     /**
      * Divide numbers.
@@ -32,9 +30,8 @@ public class Calculate {
      * @param first - first number.
      * @param second - second number.
      */
-    public static void div(double first, double second) {
-        double result = first / second;
-        System.out.println(first + " / " + second + " = " + result);
+    public double divide(double first, double second) {
+        return first / second;
     }
     /**
      * Multiply numbers.
@@ -42,18 +39,7 @@ public class Calculate {
      * @param first - first number.
      * @param second - second number.
      */
-    public static void multiply(double first, double second) {
-        double result = first * second;
-        System.out.println(first + " * " + second + " = " + result);
-    }
-    /**
-     * Main.
-     * @param args - args.
-     */
-    public static void main(String[] args) {
-        add(1, 1);
-        subtrack(10, 5);
-        div(4, 2);
-        multiply(2, 1);
+    public double multiply(double first, double second) {
+        return first * second;
     }
 }
