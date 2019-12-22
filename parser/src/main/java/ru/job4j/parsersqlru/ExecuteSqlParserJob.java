@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.Properties;
 
 @DisallowConcurrentExecution
-public class ExecuteParserJob implements Job {
+public class ExecuteSqlParserJob implements Job {
     private LocalDateTime localDateTime;
-    private static final Logger LOGGER = LogManager.getLogger(ExecuteParserJob.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(ExecuteSqlParserJob.class.getName());
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
-        LOGGER.info("Start parsing, next start - {}", jobExecutionContext.getNextFireTime().toInstant());
+        LOGGER.info("Start parsing, next start - {}", jobExecutionContext.getNextFireTime());
         JobDataMap jobDataMap = jobExecutionContext.getJobDetail().getJobDataMap();
         Properties properties = (Properties) jobDataMap.get("properties");
         try (ParserSqlRuRepository repository = new ParserSqlRuRepository(ParserDbConnection.getConnection())) {
@@ -33,8 +33,6 @@ public class ExecuteParserJob implements Job {
             }
             List<Vacancy> vacancyList = SqlParserVacancy.parseSql(localDateTime, "url", properties);
             repository.createAll(vacancyList);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
         }
     }
 }

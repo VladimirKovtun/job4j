@@ -10,16 +10,13 @@ import java.util.Properties;
 public final class ParserDbConnection {
     private static final Logger LOGGER = LogManager.getLogger(ParserDbConnection.class.getName());
     private static Properties prop = new Properties();
-    private static Connection connection;
 
     private ParserDbConnection() {
 
     }
 
-    public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            connection = config();
-        }
+    public static Connection getConnection() {
+        Connection connection = config();
         LOGGER.info("connection - {}", connection.toString());
         return connection;
     }

@@ -1,6 +1,7 @@
 package ru.job4j.parsersqlru;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Vacancy {
     private int id;
@@ -66,6 +67,27 @@ public class Vacancy {
 
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Vacancy vacancy = (Vacancy) o;
+        return id == vacancy.id
+                && Objects.equals(title, vacancy.title)
+                && Objects.equals(message, vacancy.message)
+                && Objects.equals(link, vacancy.link)
+                && Objects.equals(createTime, vacancy.createTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, message, link, createTime);
     }
 
     @Override
