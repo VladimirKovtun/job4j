@@ -72,5 +72,7 @@ public class ControlQualityTest {
         Iterator<Food> foodIterator = trash.getFoodList().iterator();
         assertThat(foodIterator.next().getName(), is("White bread"));
         assertThat(foodIterator.next().getName(), is("Chocolate Babaevskiy"));
+        assertTrue(shop.getFoodList().isEmpty());
+        assertTrue(warehouse.getFoodList().isEmpty());
     }
 }

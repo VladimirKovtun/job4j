@@ -2,6 +2,7 @@ package ru.job4j.lsp;
 
 import ru.job4j.dip.Sortable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControlQuality implements Sortable {
@@ -22,8 +23,11 @@ public class ControlQuality implements Sortable {
 
     @Override
     public void resort() {
+        List<Food> temp = new ArrayList<>();
         for (Store str : storeList) {
-            str.getFoodList().forEach(this::control);
+           temp.addAll(str.getFoodList());
+           str.getFoodList().clear();
         }
+        temp.forEach(this::control);
     }
 }
