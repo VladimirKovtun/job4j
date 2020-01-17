@@ -21,7 +21,7 @@ public class Parking implements IParking {
     @Override
     public boolean addVehicle(IVehicle vehicle) {
         boolean successParking = false;
-        /*if (vehicle.getCapacity() == carTruck) {
+        if (vehicle.getCapacity() == carTruck) {
             if (truckPlace > 0) {
                 parkList.add(vehicle);
                 truckPlace--;
@@ -35,7 +35,7 @@ public class Parking implements IParking {
                 parkList.add(vehicle);
                 carPlace--;
                 successParking = true;
-        }*/
+        }
         return successParking;
     }
 
