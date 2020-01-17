@@ -1,8 +1,10 @@
 package ru.job4j.lsp;
 
+import ru.job4j.dip.Sortable;
+
 import java.util.List;
 
-public class ControlQuality {
+public class ControlQuality implements Sortable {
     private final List<Store> storeList;
 
     public ControlQuality(List<Store> storeList) {
@@ -15,6 +17,13 @@ public class ControlQuality {
                 store.add(food);
                 break;
             }
+        }
+    }
+
+    @Override
+    public void resort() {
+        for (Store str : storeList) {
+            str.getFoodList().forEach(this::control);
         }
     }
 }

@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -31,26 +32,27 @@ public class ControlQualityTest {
         for (Food food : list) {
             contr.control(food);
         }
-        assertThat(trash.getFoodList().get(0).getName(), is("White bread"));
+        assertThat(trash.getFoodList().iterator().next().getName(), is("White bread"));
     }
 
     @Test
     public void whenAddFoodWithNewDateThenWarehouse() {
-        List<Food> list = Arrays.asList(new Food("Coca - Cola", new Date(1592222253000L), new Date(1574273453000L), 55, 0));
+        List<Food> list = Arrays.asList(new Food("Coca - Cola", new Date(1612222253000L), new Date(1574273453000L), 55, 0));
         for (Food food : list) {
             contr.control(food);
         }
-        assertThat(warehouse.getFoodList().get(0).getName(), is("Coca - Cola"));
+        assertThat(warehouse.getFoodList().iterator().next().getName(), is("Coca - Cola"));
     }
 
     @Test
     public void whenAddFoodWithDateLess25PercentThenShopAndDiscount() {
-        List<Food> list = Arrays.asList(new Food("Chocolate Babaevskiy", new Date(1577470253000L), new Date(1574273453000L), 70, 0));
+        List<Food> list = Arrays.asList(new Food("Chocolate Babaevskiy", new Date(1579470253000L), new Date(1574273453000L), 70, 0));
         for (Food food : list) {
             contr.control(food);
         }
-        assertThat(shop.getFoodList().get(0).getName(), is("Chocolate Babaevskiy"));
-        assertThat(shop.getFoodList().get(0).getDiscount(), is(50));
+        Food food = shop.getFoodList().iterator().next();
+        assertThat(food.getName(), is("Chocolate Babaevskiy"));
+        assertThat(food.getDiscount(), is(50));
     }
 
     @Test
@@ -59,6 +61,16 @@ public class ControlQualityTest {
         for (Food food : list) {
             contr.control(food);
         }
-        assertThat(shop.getFoodList().get(0).getName(), is("Chocolate Alyonka"));
+        assertThat(shop.getFoodList().iterator().next().getName(), is("Chocolate Alyonka"));
+    }
+
+    @Test
+    public void whenInShopAndWarehouseFoodWithExpiredDateThenAfterResortBothInTrash() {
+        shop.add(new Food("White bread", new Date(1577135594000L), new Date(1576865453000L), 32, 0));
+        warehouse.add(new Food("Chocolate Babaevskiy", new Date(1577470253000L), new Date(1574273453000L), 70, 0));
+        contr.resort();
+        Iterator<Food> foodIterator = trash.getFoodList().iterator();
+        assertThat(foodIterator.next().getName(), is("White bread"));
+        assertThat(foodIterator.next().getName(), is("Chocolate Babaevskiy"));
     }
 }

@@ -1,14 +1,12 @@
 package ru.job4j.lsp;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public abstract class Store {
-    private List<Food> foodList;
+    private Set<Food> foodList;
 
     public Store() {
-        this.foodList = new ArrayList<>();
+        this.foodList = new HashSet<>();
     }
 
     abstract boolean checkProduct(Food food);
@@ -23,7 +21,7 @@ public abstract class Store {
         foodList.add(food);
     }
 
-    public List<Food> getFoodList() {
+    public Set<Food> getFoodList() {
         return foodList;
     }
 }
