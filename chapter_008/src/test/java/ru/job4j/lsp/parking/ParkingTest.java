@@ -1,4 +1,4 @@
-package ru.job4j.lsp.parking2;
+package ru.job4j.lsp.parking;
 
 import org.junit.Test;
 

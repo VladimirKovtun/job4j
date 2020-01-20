@@ -1,13 +1,14 @@
 package ru.job4j.lsp.parking;
 
-public class Truck implements Vehicle {
-    private final int n;
+public class Truck implements IVehicle {
+    private final int capacity;
 
-    public Truck(int n) {
-        this.n = n;
+    public Truck(int capacity) {
+        this.capacity = capacity;
     }
 
-    public int getN() {
-        return n;
+    @Override
+    public int getCapacity() {
+        return capacity;
     }
 }
