@@ -19,9 +19,8 @@ public class SimpleGenerator {
             String mapKey = keyValue.get(key);
             if (mapKey == null) {
                 throw new RuntimeException("Not found key!");
-            } else {
-                tempMap.remove(key);
             }
+            tempMap.remove(key);
             replaceStr = replaceStr.replace(group, mapKey);
         }
         if (!tempMap.isEmpty()) {
