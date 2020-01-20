@@ -46,7 +46,7 @@ public class ControlQualityTest {
 
     @Test
     public void whenAddFoodWithDateLess25PercentThenShopAndDiscount() {
-        List<Food> list = Arrays.asList(new Food("Chocolate Babaevskiy", new Date(1579470253000L), new Date(1574273453000L), 70, 0));
+        List<Food> list = Arrays.asList(new Food("Chocolate Babaevskiy", new Date(new Date().getTime() + 86400000L), new Date(new Date().getTime() - 345600000L), 70, 0));
         for (Food food : list) {
             contr.control(food);
         }

@@ -1,7 +1,5 @@
 package ru.job4j.lsp.parking;
 
-import ru.job4j.lsp.parking.Vehicle;
-
 import java.util.ArrayList;
 import java.util.List;
 

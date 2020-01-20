@@ -18,7 +18,7 @@ public class SimpleGeneratorTest {
         keyValue.put("subject", "you");
         SimpleGenerator simpleGenerator = new SimpleGenerator();
         String result = simpleGenerator.generate(template, keyValue);
-        assertThat(result, is( "I am Petr, Who are you?"));
+        assertThat(result, is("I am Petr, Who are you?"));
     }
 
     @Test
@@ -28,7 +28,7 @@ public class SimpleGeneratorTest {
         keyValue.put("sos", "Aaa");
         SimpleGenerator simpleGenerator = new SimpleGenerator();
         String result = simpleGenerator.generate(template, keyValue);
-        assertThat(result, is( " Help, Aaa, Aaa, Aaa"));
+        assertThat(result, is(" Help, Aaa, Aaa, Aaa"));
     }
 
     @Test(expected = RuntimeException.class)
@@ -38,7 +38,7 @@ public class SimpleGeneratorTest {
         keyValue.put("name", "Petr");
         SimpleGenerator simpleGenerator = new SimpleGenerator();
         String result = simpleGenerator.generate(template, keyValue);
-        assertThat(result, is( "I am Petr, Who are you?"));
+        assertThat(result, is("I am Petr, Who are you?"));
     }
 
     @Test(expected = IllegalStateException.class)
@@ -49,6 +49,6 @@ public class SimpleGeneratorTest {
         keyValue.put("name", "Petr");
         SimpleGenerator simpleGenerator = new SimpleGenerator();
         String result = simpleGenerator.generate(template, keyValue);
-        assertThat(result, is( " Help, Aaa, Aaa, Aaa"));
+        assertThat(result, is(" Help, Aaa, Aaa, Aaa"));
     }
 }
