@@ -16,12 +16,11 @@ public class SimpleGenerator {
             String group = matcher.group(0);
             String key = group.replace("${", "")
                               .replace("}", "");
-            String mapKey = keyValue.get(key);
-            if (mapKey == null) {
+            if (!keyValue.containsKey(key)) {
                 throw new RuntimeException("Not found key!");
             }
             tempMap.remove(key);
-            replaceStr = replaceStr.replace(group, mapKey);
+            replaceStr = replaceStr.replace(group, keyValue.get(key));
         }
         if (!tempMap.isEmpty()) {
             throw new IllegalStateException("Useless keys!");
